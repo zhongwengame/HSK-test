@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="wang-CN">   
+<html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
@@ -10,7 +10,7 @@
 :root{--bg:#FAFAF7;--card:#fff;--accent:#4A90E2;--accent-light:#eef5ff;--green:#22c55e;--green-light:#f0fdf4;--red:#ef4444;--red-light:#fef2f2;--text:#1a1a1a;--text2:#666;--border:#e5e5e5;--radius:12px}
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
 
-/* ── 居中菜单视图 ── */
+/* ── 居中菜单视图 (首页大厅) ── */
 .center-view{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;gap:20px;padding:20px}
 .center-view h1{font-size:26px;font-weight:700;color:var(--accent); text-align:center;}
 .center-view p{color:var(--text2);font-size:15px;margin-bottom:10px; text-align:center;}
@@ -35,12 +35,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
 .header .status .dot.on{background:var(--green)}
 .back-btn{background:none;border:none;font-size:14px;color:var(--accent);cursor:pointer;padding:4px 8px}
 
-/* ── 学生答题区通用样式 ── */
+/* ── 试题通用样式 (学生、课后练习、教师端共用) ── */
 .s-wrap{padding:16px;max-width:600px;margin:0 auto}
 .s-name-section{background:var(--card);border-radius:var(--radius);padding:20px;border:1px solid var(--border);margin-bottom:16px}
 .s-name-section label{font-size:14px;font-weight:600;display:block;margin-bottom:8px}
 .s-text-input{width:100%;padding:14px;border:2px solid var(--border);border-radius:10px;font-size:16px;transition:border-color .2s;outline:none}
 .s-text-input:focus{border-color:var(--accent)}
+
 .s-question{background:var(--card);border-radius:var(--radius);padding:20px;border:1px solid var(--border);margin-bottom:16px}
 .s-question .q-num{font-size:13px;color:var(--accent);font-weight:700;margin-bottom:4px}
 .s-question .q-instruction{font-size:12px;color:var(--text2);margin-bottom:12px}
@@ -51,6 +52,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
 .tts-btn { background: var(--accent); color: white; border: none; padding: 10px 20px; border-radius: 30px; font-size: 15px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;}
 .tts-btn:hover { opacity: 0.9; }
 
+/* 选项样式 */
 .s-options{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
 .s-opt-btn{padding:14px 16px;border:2px solid var(--border);border-radius:10px;background:var(--card);font-size:16px;text-align:left;cursor:pointer;transition:all .15s;display:flex;align-items:flex-start;gap:10px}
 .s-opt-btn .letter{font-weight:700;color:var(--accent);min-width:24px}
@@ -61,15 +63,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
 .s-submit-btn{flex:1;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:600;cursor:pointer}
 .s-submit-btn:disabled{background:#ccc;cursor:not-allowed}
 
-/* ── 老师端样式 ── */
+/* ── 老师端专属布局 ── */
 .teacher-wrap{display:flex;height:calc(100vh - 49px)}
-.t-sidebar{width:280px;background:var(--card);border-right:1px solid var(--border);overflow-y:auto;flex-shrink:0}
+.t-sidebar{width:280px;background:var(--card);border-right:1px solid var(--border);overflow-y:auto;flex-shrink:0;padding:10px;}
 .t-main{flex:1;overflow-y:auto;padding:20px}
 .t-q-btn{width:36px;height:32px;border:1px solid var(--border);border-radius:6px;background:var(--card);font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;margin:2px;}
 .t-q-btn:hover{border-color:var(--accent);color:var(--accent)}
 .t-q-btn.active{background:var(--accent);color:#fff}
-.t-question-card{background:var(--card);border-radius:var(--radius);padding:24px;border:1px solid var(--border);margin-bottom:16px}
-.t-btn{padding:10px 20px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;border:none;transition:all .15s; margin-right:5px;}
+.t-btn{padding:12px 20px;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;border:none;transition:all .15s; flex:1;}
+.t-btn:hover{opacity: 0.9;}
 .t-btn-push{background:var(--accent);color:#fff}
 .t-btn-reveal{background:#2563eb;color:#fff}
 .t-dashboard{background:var(--card);border-radius:var(--radius);padding:20px;border:1px solid var(--border)}
@@ -145,7 +147,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
   </div>
   <div class="teacher-wrap">
     <div class="t-sidebar" id="tSidebar"></div>
-    <div class="t-main" id="tMain"><div style="text-align:center;padding:60px;color:var(--text2)">👈 从左侧选择题目开始发放</div></div>
+    <div class="t-main" id="tMain">
+        <div style="text-align:center;padding:60px;color:var(--text2)">
+            <div style="font-size:40px;margin-bottom:15px;">👈</div>
+            <p>请从左侧题号面板点击任意题目</p>
+            <p style="font-size:12px;margin-top:5px;">题目将立即发送给全班学生</p>
+        </div>
+    </div>
   </div>
 </div>
 
@@ -171,7 +179,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
 
 <script>
 // ==========================================
-// ⭐ 第一步：试卷目录配置区 (未来加课就在这里加一行) ⭐
+// ⭐ 第一步：大厅试卷目录配置区 (可自由增删) ⭐
 // ==========================================
 const TEST_CATALOG = [
     { id: "H4_11", title: "第11课", subtitle: "读书好，读好书，好读书" },
@@ -184,9 +192,6 @@ const TEST_CATALOG = [
     { id: "H4_18", title: "第18课", subtitle: "科技与世界" },
     { id: "H4_19", title: "第19课", subtitle: "生活的味道" },
     { id: "H4_20", title: "第20课", subtitle: "路上的风景" }
-    // ⬇️ 以后需要加新课，直接把下面注释的双斜杠去掉，改个名字就行！
-    // { id: "H4_12", title: "第12课", subtitle: "用心发现世界" },
-    // { id: "H4_Mock_1", title: "HSK四级", subtitle: "全真模拟考试一" }
 ];
 
 // ==========================================
@@ -195,7 +200,7 @@ const TEST_CATALOG = [
 const MY_ROOM_ID = 'Wang_HSK_2024'; 
 const WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbwMzONEKnw-Va5vD1Q0u0lbywAXejZj4xBgB4gYCEuial-fNrJFN1cjnqHaGE6QtJdiuA/exec";
 
-// MQTT 配置 (基于试卷ID动态生成，绝对防串台)
+// MQTT 配置 
 const MQTT_URL = 'wss://05d1d5baec9d4cb3a21f5517b430cff1.s1.eu.hivemq.cloud:8884/mqtt';
 const MQTT_USER = 'classpro'; const MQTT_PASS = 'Classpro2026';
 let TOPIC_Q = ""; let TOPIC_ANS = ""; let TOPIC_REV = "";
@@ -206,19 +211,17 @@ let ALL_QUESTIONS = [];
 let Q_MAP = {};
 
 // ==========================================
-// 页面加载逻辑
+// 页面加载与大厅渲染逻辑
 // ==========================================
 window.onload = function() {
     renderTestCatalog();
 };
 
-// 渲染试卷大厅
 function renderTestCatalog() {
     const grid = document.getElementById('testGrid');
     let html = '';
     TEST_CATALOG.forEach(test => {
-        html += `
-        <div class="test-card" onclick="loadTestData('${test.id}')">
+        html += `<div class="test-card" onclick="loadTestData('${test.id}')">
             <h3>${test.title}</h3>
             <span>${test.subtitle}</span>
         </div>`;
@@ -226,11 +229,8 @@ function renderTestCatalog() {
     grid.innerHTML = html;
 }
 
-// 动态加载对应试卷的 JS 数据文件
 function loadTestData(testId) {
     currentTestId = testId;
-    
-    // 设置独立的 MQTT 频道（防止同时上不同课时串台）
     TOPIC_Q = `room/${MY_ROOM_ID}/hsk/${currentTestId}/question`;
     TOPIC_ANS = `room/${MY_ROOM_ID}/hsk/${currentTestId}/answer`;
     TOPIC_REV = `room/${MY_ROOM_ID}/hsk/${currentTestId}/reveal`;
@@ -239,7 +239,6 @@ function loadTestData(testId) {
     document.getElementById('modeSelectView').style.display = 'flex';
     document.getElementById('selectedTestTitle').innerText = "加载中...";
 
-    // 动态创建 script 标签引入数据
     const script = document.createElement('script');
     script.src = `data_${testId}.js`;
     
@@ -248,7 +247,6 @@ function loadTestData(testId) {
             const d = window.HSK_TEST_DATA;
             ALL_QUESTIONS = d.questions;
             ALL_QUESTIONS.forEach(q => Q_MAP[q.id] = q);
-            
             document.getElementById('selectedTestTitle').innerText = d.level + ' 测试';
             document.getElementById('selectedTestSubtitle').innerText = '当前所选: ' + (d.testId || testId);
             document.getElementById('btnGroup').style.display = 'flex';
@@ -257,7 +255,7 @@ function loadTestData(testId) {
     
     script.onerror = () => {
         document.getElementById('selectedTestTitle').innerText = "加载失败 ❌";
-        document.getElementById('selectedTestSubtitle').innerHTML = `未找到文件 <b>data_${testId}.js</b><br>请确保文件已上传到同一文件夹下。`;
+        document.getElementById('selectedTestSubtitle').innerHTML = `未找到文件 <b>data_${testId}.js</b><br>请确保该文件已放在同一文件夹下。`;
     };
     
     document.body.appendChild(script);
@@ -268,7 +266,6 @@ function escHtml(s) {
     const d = document.createElement('div'); d.textContent = s; return d.innerHTML.replace(/\n/g, '<br>');
 }
 
-// ================== 音频控制函数 ==================
 function playAudioOrTTS(qId) {
     const q = Q_MAP[qId]; if(!q) return;
     window.speechSynthesis.cancel();
@@ -326,7 +323,7 @@ function hwRenderQ() {
 
     document.getElementById('hwQuestionArea').innerHTML = `
         <div class="s-question">
-            <div class="q-num">第 ${q.id} 题 · ${q.section} ${q.part}</div>
+            <div class="q-num">第 ${q.id} 题 · ${q.section} ${q.part || ''}</div>
             <div class="q-instruction">${escHtml(q.instruction)}</div>
             ${audioHtml}
             ${bodyHtml}
@@ -393,26 +390,94 @@ function enterMode(m) {
     });
 }
 
+// 构建左侧题目导航（教师端专属）
 function buildLiveSidebar() {
-    let html = ''; ALL_QUESTIONS.forEach(q => { html += `<button class="t-q-btn" onclick="liveSelectQ(${q.id})">${q.id}</button>`; });
-    document.getElementById('tSidebar').innerHTML = `<div style="padding:10px; display:flex; flex-wrap:wrap;">${html}</div>`;
+    let html = '<div style="display:flex; flex-wrap:wrap;">'; 
+    ALL_QUESTIONS.forEach(q => { html += `<button class="t-q-btn" id="tSidebarBtn_${q.id}" onclick="liveSelectQ(${q.id})">${q.id}</button>`; });
+    html += '</div>';
+    document.getElementById('tSidebar').innerHTML = html;
 }
 
+// ★ 老师专属的本地答题函数，边讲课边示范，自动显示到下面的仪表盘里
+function teacherSelectAns(val) {
+    // 移除所有按钮的高亮
+    document.querySelectorAll('#tMain .s-opt-btn, #tMain .s-tf-btn').forEach(b => b.style.borderColor = 'var(--border)');
+    // 给老师点中的按钮加上高亮
+    let targetBtn = document.getElementById('topt_' + val);
+    if(targetBtn) targetBtn.style.borderColor = '#4A90E2';
+    
+    // 把老师的答案加入到本地统计里
+    liveSubmissions["老师(我)"] = val;
+    renderLiveDashboard();
+}
+
+// ★ 教师端的题目展示，现在支持老师自己点击答题了
 function liveSelectQ(id) {
     currentLiveQId = id; liveSubmissions = {}; const q = Q_MAP[id];
-    let audioBtn = q.section === '听力' ? `<button class="t-btn" style="background:var(--accent);color:white;margin-bottom:10px" onclick="playAudioOrTTS(${q.id})">🔊 在我的电脑上播放录音</button><br>` : '';
     
-    document.getElementById('tMain').innerHTML = `
-        <div class="t-question-card">
-            <h3 style="color:var(--accent);margin-bottom:10px">正在全班同步：第 ${q.id} 题</h3>
-            <p style="color:var(--text2);margin-bottom:15px">${q.instruction}</p>
-            ${audioBtn}
-            <div class="q-body" style="font-size:18px;margin-bottom:20px">${escHtml(q.body)} ${escHtml(q.statement)}</div>
-            <button class="t-btn t-btn-push" onclick="mqttClient.publish(TOPIC_Q, JSON.stringify({qId:${q.id}}))">📢 重发本题</button>
-            <button class="t-btn t-btn-reveal" onclick="mqttClient.publish(TOPIC_REV, JSON.stringify({ans:'${q.answer}'}))">📊 公布答案 (${q.answer})</button>
+    // 更新左侧侧边栏高亮状态
+    document.querySelectorAll('.t-q-btn').forEach(btn => btn.classList.remove('active'));
+    let activeBtn = document.getElementById(`tSidebarBtn_${id}`);
+    if(activeBtn) activeBtn.classList.add('active');
+    
+    // 1. 听力部分
+    let audioHtml = '';
+    if (q.section === '听力') {
+        if(q.audio) { audioHtml = `<div class="audio-box"><audio controls style="width:100%"><source src="${q.audio}" type="audio/mpeg"></audio></div>`; }
+        else if (q.script) { audioHtml = `<div class="audio-box"><button class="tts-btn" onclick="playAudioOrTTS(${q.id})">🔊 播放听力录音</button></div>`; }
+    }
+
+    // 2. 题干部分
+    let bodyHtml = '';
+    if (q.body) bodyHtml = `<div class="q-body">${escHtml(q.body)}</div>`;
+    if (q.statement) bodyHtml = `<div class="q-body">★ ${escHtml(q.statement)}</div>`;
+
+    // 3. 选项部分 (使用 <button> 并绑定 teacherSelectAns，让老师可以点)
+    let inputHtml = '';
+    if (q.type === 'choice' && q.options) {
+        inputHtml = '<div class="s-options">';
+        q.options.forEach((opt, i) => {
+            const key = q.optionKeys ? q.optionKeys[i] : String.fromCharCode(65 + i);
+            inputHtml += `<button class="s-opt-btn" id="topt_${key}" onclick="teacherSelectAns('${key}')"><span class="letter">${key}</span><span>${escHtml(opt.replace(/^[A-F]\.\s*/, ''))}</span></button>`;
+        });
+        inputHtml += '</div>';
+    } else if (q.type === 'true_false') {
+        inputHtml = `<div class="s-tf-btns">
+            <button class="s-tf-btn" id="topt_true" onclick="teacherSelectAns(true)">✓ 对</button>
+            <button class="s-tf-btn" id="topt_false" onclick="teacherSelectAns(false)">✗ 错</button>
+        </div>`;
+    } else if (q.type === 'text_input') {
+        inputHtml = `<input type="text" class="s-text-input" placeholder="老师可在此输入示范..." onblur="teacherSelectAns(this.value)">`;
+    } else {
+        inputHtml = `<p style="color:var(--text2);font-size:14px;margin-bottom:10px;">此题为主观题，请口头指导学生回答。</p>`;
+    }
+
+    // 4. 教师端底部操作按钮组
+    let actionBtns = `
+        <div style="display:flex; gap:12px; margin-top:15px; padding-top:20px; border-top:1px dashed var(--border);">
+            <button class="t-btn t-btn-push" onclick="mqttClient.publish(TOPIC_Q, JSON.stringify({qId:${q.id}}))">📢 发放/重发本题</button>
+            <button class="t-btn t-btn-reveal" onclick="mqttClient.publish(TOPIC_REV, JSON.stringify({ans:'${q.answer}'}))">📊 停止答题并公布答案</button>
         </div>
-        <div class="t-dashboard"><h3>答题监控 (已答: <span id="liveAnsCount">0</span>)</h3><div class="t-answers-grid" id="liveAnsGrid"></div></div>
     `;
+
+    // 5. 渲染到大屏中间
+    document.getElementById('tMain').innerHTML = `
+        <div class="s-question" style="max-width:100%; border:2px solid var(--accent); margin:0 0 16px 0;">
+            <div class="q-num">👑 当前同步给全班：第 ${q.id} 题 · ${q.section} ${q.part || ''}</div>
+            <div class="q-instruction">${escHtml(q.instruction)}</div>
+            ${audioHtml}
+            ${bodyHtml}
+            ${inputHtml}
+            ${actionBtns}
+        </div>
+        
+        <div class="t-dashboard">
+            <h3>实时答题监控 (已答人数: <span id="liveAnsCount" style="color:var(--accent);">0</span>)</h3>
+            <div class="t-answers-grid" id="liveAnsGrid"></div>
+        </div>
+    `;
+    
+    // 自动向全班推送
     mqttClient.publish(TOPIC_Q, JSON.stringify({qId: q.id}));
 }
 
@@ -433,13 +498,16 @@ function renderLiveStudentQ(id) {
         else if (q.script) { audioHtml = `<div class="audio-box"><button class="tts-btn" onclick="playAudioOrTTS(${q.id})">🔊 自己播放本题录音</button></div>`; }
     }
 
-    if (q.type === 'choice') {
+    if (q.type === 'choice' && q.options) {
         q.options.forEach((opt, i) => {
             const key = q.optionKeys ? q.optionKeys[i] : String.fromCharCode(65+i);
             inputHtml += `<button class="s-opt-btn" id="lopt_${key}" onclick="liveSendAns('${key}')"><span class="letter">${key}</span><span>${escHtml(opt)}</span></button>`;
         });
     } else if (q.type === 'true_false') {
         inputHtml += `<button class="s-tf-btn" id="lopt_true" onclick="liveSendAns(true)">✓ 对</button><button class="s-tf-btn" id="lopt_false" onclick="liveSendAns(false)">✗ 错</button>`;
+    } else if (q.type === 'text_input') {
+        inputHtml += `<input type="text" class="s-text-input" placeholder="请在此输入你的答案..." onblur="liveSendAns(this.value)">
+                      <p style="font-size:12px;color:var(--text2);margin-top:8px;">* 输入完成后点击页面空白处即可提交给老师</p>`;
     } else {
         inputHtml += `<p style="color:var(--text2)">此题为主观题，请听老师安排。</p>`;
     }
@@ -461,7 +529,8 @@ function liveSendAns(val) {
     localStorage.setItem('hsk_live_name', name); 
     liveMyAnswer = val;
     document.querySelectorAll('.s-opt-btn, .s-tf-btn').forEach(b => b.style.borderColor = 'var(--border)');
-    document.getElementById('lopt_' + val).style.borderColor = '#4A90E2';
+    let targetBtn = document.getElementById('lopt_' + val);
+    if(targetBtn) targetBtn.style.borderColor = '#4A90E2';
     mqttClient.publish(TOPIC_ANS, JSON.stringify({ qId: currentLiveQId, name: name, ans: val }));
 }
 
