@@ -15,18 +15,18 @@ window.HSK_TEST_DATA = {
         { "id": 8, "section": "听力", "part": "第二部分", "type": "choice", "instruction": "请选出正确答案", "options": ["手机", "关教授", "笔记", "电话号码"], "answer": "D" },
         { "id": 9, "section": "听力", "part": "第二部分", "type": "choice", "instruction": "请选出正确答案", "options": ["面试很重要", "不用担心面试", "不能改变顺序", "下次早点儿来"], "answer": "C" },
         { "id": 10, "section": "听力", "part": "第二部分", "type": "choice", "instruction": "请选出正确答案", "options": ["没去上课", "没记准新词", "没听懂语法", "没带笔记"], "answer": "B" },
-        { "id": 11, "section": "听力", "part": "第二部分", "type": "choice", "instruction": "请选出正确答案", "options": ["小说很贵", "应该买报纸", "男的不爱看书", "书在桌子上"], "answer": "A" },
+        { "id": 11, "section": "听力", "part": "第二部分", "type": "choice", "instruction": "请选出正确答案", "options": ["小说很贵", "应该买报纸", "男的不爱看书", "书在桌子上"], "answer": "C" },
         { "id": 12, "section": "听力", "part": "第二部分", "type": "choice", "instruction": "请选出正确答案", "options": ["结果不重要", "比赛有意思", "没赢很难过", "时间来得及"], "answer": "A" },
 
         { "id": 13, "section": "听力", "part": "第三部分", "type": "choice", "instruction": "请选出正确答案", "options": ["比较难", "应该改", "可以猜", "没问题"], "answer": "B" },
         { "id": 14, "section": "听力", "part": "第三部分", "type": "choice", "instruction": "请选出正确答案", "options": ["汉语说得不太好", "知道很多汉语词", "觉得女的很厉害", "刚刚开始学汉语"], "answer": "B" },
         { "id": 15, "section": "听力", "part": "第三部分", "type": "choice", "instruction": "请选出正确答案", "options": ["用很长时间", "多看材料", "复习主要的", "注意语法"], "answer": "C" },
-        { "id": 16, "section": "听力", "part": "第三部分", "type": "choice", "instruction": "请选出正确答案", "options": ["讲故事", "做蛋糕", "看完书", "做计划"], "answer": "A" },
-        { "id": 17, "section": "听力", "part": "第三部分", "type": "choice", "instruction": "请选出正确答案", "options": ["送材料", "取报纸", "还杂志", "送礼物"], "answer": "C" },
-        { "id": 18, "section": "听力", "part": "第三部分", "type": "choice", "instruction": "请选出正确答案", "options": ["内容精彩", "图片漂亮", "价格便宜", "很吸引人"], "answer": "B" },
-        { "id": 19, "section": "听力", "part": "第三部分", "type": "choice", "instruction": "请选出正确答案", "options": ["获得机会", "选择新闻", "关心大家", "及时看报"], "answer": "D" },
-        { "id": 20, "section": "听力", "part": "第三部分", "type": "choice", "instruction": "请选出正确答案", "options": ["所有的消息", "刚获得的消息", "生活中的事", "大家关心的热点"], "answer": "B" },
-        { "id": 21, "section": "听力", "part": "第三部分", "type": "choice", "instruction": "请选出正确答案", "options": ["很诚实", "汉语很好", "想当翻译", "爱开玩笑"], "answer": "C" },
+        { "id": 16, "section": "听力", "part": "第三部分", "type": "choice", "instruction": "请选出正确答案", "options": ["讲故事", "做蛋糕", "看完书", "做计划"], "answer": "C" },
+        { "id": 17, "section": "听力", "part": "第三部分", "type": "choice", "instruction": "请选出正确答案", "options": ["送材料", "取报纸", "还杂志", "送礼物"], "answer": "A" },
+        { "id": 18, "section": "听力", "part": "第三部分", "type": "choice", "instruction": "请选出正确答案", "options": ["内容精彩", "图片漂亮", "价格便宜", "很吸引人"], "answer": "C" },
+        { "id": 19, "section": "听力", "part": "第三部分", "type": "choice", "instruction": "请选出正确答案", "options": ["获得机会", "选择新闻", "关心大家", "及时看报"], "answer": "B" },
+        { "id": 20, "section": "听力", "part": "第三部分", "type": "choice", "instruction": "请选出正确答案", "options": ["所有的消息", "刚获得的消息", "生活中的事", "大家关心的热点"], "answer": "D" },
+        { "id": 21, "section": "听力", "part": "第三部分", "type": "choice", "instruction": "请选出正确答案", "options": ["很诚实", "汉语很好", "想当翻译", "爱开玩笑"], "answer": "B" },
         { "id": 22, "section": "听力", "part": "第三部分", "type": "choice", "instruction": "请选出正确答案", "options": ["问同学", "问老师", "查词典", "放在一边"], "answer": "C" },
 
         // ================= 二、 阅读 =================
@@ -52,16 +52,16 @@ window.HSK_TEST_DATA = {
         { "id": 39, "section": "阅读", "part": "第三部分", "type": "choice", "instruction": "请选出正确答案", "body": "我最喜欢读的就是这份报纸，它的内容非常丰富，同时，广告也很少。最重要的是，上面的经济方面的新闻对我的工作很有帮助。\n★他喜欢这份报纸的原因之一是：", "options": ["免费", "价格低", "广告少", "笑话多"], "answer": "C" },
         
         { "id": 40, "section": "阅读", "part": "第三部分", "type": "choice", "instruction": "请选出正确答案", "body": "有位名人说:\"要想知道自己长得什么样，衣服穿得合不合适，只要照照镜子就知道了；要想知道自己的缺点是什么，就需要了解别人对你有哪些不好的看法。\" 所以我们应该以那些说真话的人为 \"镜子\"，这样才能及时发现自己的缺点，提高自己。\n★根据这段话，哪种人是我们的 \"镜子\"?", "options": ["爱买衣服的人", "爱照镜子的人", "爱聊天儿的人", "说真话的人"], "answer": "D" },
-        { "id": 41, "section": "阅读", "part": "第三部分", "type": "choice", "instruction": "请选出正确答案", "body": "（接上题材料）\n★这段话主要说：", "options": ["人和人的关系", "怎么发现缺点", "买衣服的条件", "照镜子的方法"], "answer": "B" },
+        { "id": 41, "section": "阅读", "part": "第三部分", "type": "choice", "instruction": "请选出正确答案", "body": "（接上题材料）有位名人说:\"要想知道自己长得什么样，衣服穿得合不合适，只要照照镜子就知道了；要想知道自己的缺点是什么，就需要了解别人对你有哪些不好的看法。\" 所以我们应该以那些说真话的人为 \"镜子\"，这样才能及时发现自己的缺点，提高自己。\n★这段话主要说：", "options": ["人和人的关系", "怎么发现缺点", "买衣服的条件", "照镜子的方法"], "answer": "B" },
         { "id": 42, "section": "阅读", "part": "第三部分", "type": "choice", "instruction": "请选出正确答案", "body": "关于读书，有两点必须要注意：第一，应该养成爱阅读的好习惯。读书会让你的知识更丰富，生活更精彩。第二，自己不花时间去想，完全相信并且接受书上写的，这是不对的，因为书上的知识和想法并不总是正确的。否则，读书对自己就没什么帮助。\n★阅读可以使人：", "options": ["很快变富", "增加知识", "更有耐心", "变得有计划"], "answer": "B" },
-        { "id": 43, "section": "阅读", "part": "第三部分", "type": "choice", "instruction": "请选出正确答案", "body": "（接上题材料）\n★根据这段话，读书要：", "options": ["相信写书的人", "多做读书笔记", "有自己的看法", "经常帮助别人"], "answer": "C" },
+        { "id": 43, "section": "阅读", "part": "第三部分", "type": "choice", "instruction": "请选出正确答案", "body": "（接上题材料）关于读书，有两点必须要注意：第一，应该养成爱阅读的好习惯。读书会让你的知识更丰富，生活更精彩。第二，自己不花时间去想，完全相信并且接受书上写的，这是不对的，因为书上的知识和想法并不总是正确的。否则，读书对自己就没什么帮助。\n★根据这段话，读书要：", "options": ["相信写书的人", "多做读书笔记", "有自己的看法", "经常帮助别人"], "answer": "C" },
 
         // ================= 三、 书写 =================
-        { "id": 44, "section": "书写", "part": "第一部分", "type": "text_input", "gradeMode": "auto_char", "instruction": "完成句子", "body": "你在  说明书  要  使用  之前  仔细阅读", "answer": "你在使用之前要仔细阅读说明书。" },
-        { "id": 45, "section": "书写", "part": "第一部分", "type": "text_input", "gradeMode": "auto_char", "instruction": "完成句子", "body": "页  这本  一共  多  小说  二百", "answer": "这本小说一共二百多页。" },
-        { "id": 46, "section": "书写", "part": "第一部分", "type": "text_input", "gradeMode": "auto_char", "instruction": "完成句子", "body": "我们  想  复杂  了  把  简单的  事情", "answer": "我们把简单的事情想复杂了。" },
-        { "id": 47, "section": "书写", "part": "第一部分", "type": "text_input", "gradeMode": "auto_char", "instruction": "完成句子", "body": "很多 开始  那篇  注意  文章  人", "answer": "很多人开始注意那篇文章。" },
-        { "id": 48, "section": "书写", "part": "第一部分", "type": "text_input", "gradeMode": "auto_char", "instruction": "完成句子", "body": "这种  能  减轻  方法  有效地  压力", "answer": "这种方法能有效地减轻压力。" },
+        { "id": 44, "section": "书写", "part": "第一部分", "type": "text_input", "gradeMode": "auto_char", "instruction": "完成句子", "body": "你在  说明书  要  使用  之前  仔细阅读", "answer": "你在使用之前要仔细阅读说明书" },
+        { "id": 45, "section": "书写", "part": "第一部分", "type": "text_input", "gradeMode": "auto_char", "instruction": "完成句子", "body": "页  这本  一共  多  小说  二百", "answer": "这本小说一共二百多页" },
+        { "id": 46, "section": "书写", "part": "第一部分", "type": "text_input", "gradeMode": "auto_char", "instruction": "完成句子", "body": "我们  想  复杂  了  把  简单的  事情", "answer": "我们把简单的事情想复杂了" },
+        { "id": 47, "section": "书写", "part": "第一部分", "type": "text_input", "gradeMode": "auto_char", "instruction": "完成句子", "body": "很多 开始  那篇  注意  文章  人", "answer": "很多人开始注意那篇文章" },
+        { "id": 48, "section": "书写", "part": "第一部分", "type": "text_input", "gradeMode": "auto_char", "instruction": "完成句子", "body": "这种  能  减轻  方法  有效地  压力", "answer": "这种方法能有效地减轻压力" },
         
         { "id": 49, "section": "书写", "part": "第二部分", "type": "text_input", "gradeMode": "manual", "instruction": "看图，用词造句", "body": "关键词：精彩 (示例图略)", "answer": "昨天的比赛十分精彩。" },
         { "id": 50, "section": "书写", "part": "第二部分", "type": "text_input", "gradeMode": "manual", "instruction": "看图，用词造句", "body": "关键词：养成 (示例图略)", "answer": "我们要养成每天阅读的好习惯。" }
