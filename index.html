@@ -346,9 +346,14 @@ function hwSubmit() {
         let isCorrect = "需人工批改";
         if(q.gradeMode !== 'manual') {
             totalObj++; isCorrect = "错误"; let wrong = true;
-            if(q.type==='text_input' && q.gradeMode==='auto_char') {
-                if(uAns && uAns.toUpperCase().replace(/\s/g,'') === q.answer.toUpperCase()) { correctCount++; isCorrect = "正确"; wrong = false; }
-            } else { if(uAns === q.answer) { correctCount++; isCorrect = "正确"; wrong = false; } }
+            // 忽略大小写及空格判定
+            if(q.type === 'text_input' && q.gradeMode === 'auto_char') {
+                let cleanUAns = String(uAns || "").toUpperCase().replace(/\s/g, '');
+                let cleanCAns = String(q.answer || "").toUpperCase().replace(/\s/g, '');
+                if(cleanUAns === cleanCAns) { correctCount++; isCorrect = "正确"; wrong = false; }
+            } else { 
+                if(uAns === q.answer) { correctCount++; isCorrect = "正确"; wrong = false; } 
+            }
             if(wrong) { if(!mistakes[q.section]) mistakes[q.section] = 0; mistakes[q.section]++; }
         }
         details.push({ 题号: q.id, 题型: q.section, 你的答案: displayAns, 正确答案: q.answer, 结果: isCorrect });
@@ -536,8 +541,18 @@ function liveSendAns(val) {
 
 function renderLiveStudentReveal(correctAns) {
     const resBox = document.getElementById('liveResultBox'); if(!resBox) return;
-    if(String(liveMyAnswer) === String(correctAns)) { resBox.style.color = '#166534'; resBox.innerText = '✅ 回答正确！'; } 
-    else { resBox.style.color = '#dc2626'; resBox.innerText = `❌ 正确答案是: ${correctAns}`; }
+    
+    // 互动直播课忽略大小写和空格的判定逻辑
+    let myAns = String(liveMyAnswer || '').toUpperCase().replace(/\s/g, '');
+    let cAns = String(correctAns || '').toUpperCase().replace(/\s/g, '');
+    
+    if(myAns === cAns) { 
+        resBox.style.color = '#166534'; 
+        resBox.innerText = '✅ 回答正确！'; 
+    } else { 
+        resBox.style.color = '#dc2626'; 
+        resBox.innerText = `❌ 正确答案是: ${correctAns}`; 
+    }
 }
 </script>
 </body>
