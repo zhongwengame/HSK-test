@@ -270,7 +270,8 @@ function playAudioOrTTS(qId) {
     const q = Q_MAP[qId]; if(!q) return;
     window.speechSynthesis.cancel();
     if (q.audio) {
-        const audioEl = document.getElementById('audioPlayer');
+        // 如果是错题本页面，会有多个独立的 audio 标签，所以这里判断如果是独立的就播放
+        const audioEl = document.getElementById('audioPlayer_' + qId) || document.getElementById('audioPlayer');
         if(audioEl) { audioEl.src = q.audio; audioEl.play(); }
     } else if (q.script) {
         const utterance = new SpeechSynthesisUtterance(q.script);
@@ -281,8 +282,8 @@ function playAudioOrTTS(qId) {
 
 // ================== 课后自主练习 ==================
 let hwIndex = 0; let hwAnswers = {};
+let currentMistakes = []; // 🌟 新增：用来存当前错题
 
-// 🌟 新增：保存当前进度到手机本地
 function saveProgress() {
     if (!currentTestId) return;
     const progressData = { index: hwIndex, answers: hwAnswers };
@@ -293,17 +294,15 @@ function enterHomework() {
     document.getElementById('modeSelectView').style.display = 'none';
     document.getElementById('homeworkView').style.display = '';
     
-    // 🌟 新增：检查手机里有没有上次没做完的记录
     const savedData = localStorage.getItem('hsk_progress_' + currentTestId);
     if (savedData) {
         try {
             const parsed = JSON.parse(savedData);
-            // 只有当有进度，并且学生同意恢复时，才加载
             if (confirm("系统发现你有上次未完成的答题记录，是否继续上次的进度？\n(点取消将重新开始)")) {
                 hwIndex = parsed.index || 0;
                 hwAnswers = parsed.answers || {};
             } else {
-                localStorage.removeItem('hsk_progress_' + currentTestId); // 删除旧进度
+                localStorage.removeItem('hsk_progress_' + currentTestId); 
             }
         } catch(e) {}
     }
@@ -341,7 +340,6 @@ function hwRenderQ() {
     } else if (q.type === 'true_false') {
         inputHtml = `<div class="s-tf-btns"><button class="s-tf-btn${savedAns===true?' selected':''}" onclick="hwSelect(true)">✓ 对</button><button class="s-tf-btn${savedAns===false?' selected':''}" onclick="hwSelect(false)">✗ 错</button></div>`;
     } else if (q.type === 'text_input') {
-        // 🚨 第3步修改：主观题打字静默保存，且加入 saveProgress 触发进度存储
         inputHtml = `<input class="s-text-input" placeholder="请在此输入答案..." value="${savedAns||''}" oninput="hwAnswers[ALL_QUESTIONS[hwIndex].id] = this.value; saveProgress();">`;
     }
 
@@ -355,14 +353,12 @@ function hwRenderQ() {
         </div>`;
 }
 
-// 🚨 第3步修改：加入 saveProgress 触发进度存储
 function hwSelect(val) { 
     hwAnswers[ALL_QUESTIONS[hwIndex].id] = val; 
     saveProgress(); 
     hwRenderQ(); 
 }
 
-// 🚨 第3步修改：加入 saveProgress 触发进度存储
 function hwChangeQ(step) { 
     if (hwIndex + step >= ALL_QUESTIONS.length) { hwSubmit(); return; } 
     hwIndex += step; 
@@ -377,6 +373,8 @@ function hwSubmit() {
     document.getElementById('hwNavGroup').style.display = 'none';
 
     let correctCount = 0, totalObj = 0, details = [], mistakes = {};
+    currentMistakes = []; // 清空之前的错题记录
+
     ALL_QUESTIONS.forEach(q => {
         const uAns = hwAnswers[q.id]; const displayAns = uAns === undefined ? "未作答" : uAns;
         let isCorrect = "需人工批改";
@@ -390,7 +388,10 @@ function hwSubmit() {
             } else { 
                 if(uAns === q.answer) { correctCount++; isCorrect = "正确"; wrong = false; } 
             }
-            if(wrong) { if(!mistakes[q.section]) mistakes[q.section] = 0; mistakes[q.section]++; }
+            if(wrong) { 
+                if(!mistakes[q.section]) mistakes[q.section] = 0; mistakes[q.section]++; 
+                currentMistakes.push(q); // 🌟 记录错题
+            }
         }
         details.push({ 题号: q.id, 题型: q.section, 你的答案: displayAns, 正确答案: q.answer, 结果: isCorrect });
     });
@@ -402,15 +403,70 @@ function hwSubmit() {
 
     fetch(WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(report) })
     .then(r => r.json()).then(res => {
-        
-        // 🚨 第4步修改：交卷成功后，删除本地保存的进度
         localStorage.removeItem('hsk_progress_' + currentTestId);
         
-        document.getElementById('hwQuestionArea').innerHTML = `<div style="background:var(--green-light);border:1px solid var(--green);border-radius:12px;padding:30px;text-align:center;"><div style="font-size:40px;margin-bottom:10px">✅</div><h2 style="color:#166534;margin-bottom:15px">测试完成！</h2><p>客观题得分：<b style="font-size:20px">${score}分</b> (${correctCount}/${totalObj})</p></div>`;
+        // 🌟 动态生成错题按钮
+        let reviewBtnHtml = currentMistakes.length > 0 
+            ? `<button onclick="renderMistakesView()" class="s-submit-btn" style="width:100%; margin-top:20px; background:var(--red);">🔍 查看错题 (${currentMistakes.length})</button>`
+            : `<p style="color:var(--green); font-weight:bold; margin-top:20px; font-size:18px;">🎉 太棒了，全部正确！没有错题。</p>`;
+
+        document.getElementById('hwQuestionArea').innerHTML = `
+            <div style="background:var(--green-light);border:1px solid var(--green);border-radius:12px;padding:30px;text-align:center;">
+                <div style="font-size:40px;margin-bottom:10px">✅</div>
+                <h2 style="color:#166534;margin-bottom:15px">测试完成！</h2>
+                <p>客观题得分：<b style="font-size:20px">${score}分</b> (${correctCount}/${totalObj})</p>
+                ${reviewBtnHtml}
+                <button onclick="location.reload()" class="s-submit-btn" style="width:100%; margin-top:12px; background:var(--card); color:var(--text); border:1px solid var(--border);">🏠 返回首页</button>
+            </div>`;
     }).catch(e => {
         document.getElementById('hwQuestionArea').innerHTML += '<p style="color:red;text-align:center">网络原因上传失败，请截图保留分数发给老师。</p>';
-        // 如果断网失败，我们不清除进度！这样学生一刷新，还能恢复刚才的答案重新交卷！
     });
+}
+
+// 🌟 格式化答案显示 (判断题显示对错)
+function formatAnsDisplay(ans) {
+    if(ans === true) return "✓ 对";
+    if(ans === false) return "✗ 错";
+    if(ans === undefined || ans === null || ans === "") return "未作答";
+    return escHtml(String(ans));
+}
+
+// 🌟 新增：渲染错题本界面
+function renderMistakesView() {
+    window.scrollTo(0, 0); // 滚动到顶部
+    let html = `<h2 style="color:var(--red); text-align:center; margin-bottom:20px;">🔍 错题本</h2>`;
+    
+    currentMistakes.forEach(q => {
+        let uAns = hwAnswers[q.id];
+        
+        let audioHtml = '';
+        if (q.section === '听力') {
+            if(q.audio) { audioHtml = `<div class="audio-box"><audio id="audioPlayer_${q.id}" controls style="width:100%; height:40px;"><source src="${q.audio}" type="audio/mpeg"></audio></div>`; } 
+            else if (q.script) { audioHtml = `<div class="audio-box" style="padding:10px;"><button class="tts-btn" onclick="playAudioOrTTS(${q.id})">🔊 听录音</button></div>`; }
+        }
+
+        let bodyHtml = '';
+        if (q.body) bodyHtml = `<div class="q-body">${escHtml(q.body)}</div>`;
+        if (q.statement) bodyHtml = `<div class="q-body">★ ${escHtml(q.statement)}</div>`;
+
+        html += `
+        <div class="s-question" style="border: 2px solid var(--red-light);">
+            <div class="q-num" style="color:var(--red);">第 ${q.id} 题 · ${q.section} ${q.part || ''}</div>
+            <div class="q-instruction">${escHtml(q.instruction)}</div>
+            ${audioHtml}
+            ${bodyHtml}
+            <div style="margin-top:15px; padding:12px; background:var(--red-light); border-radius:8px; color:#991b1b; font-size:15px;">
+                <b>你的答案：</b> ${formatAnsDisplay(uAns)}
+            </div>
+            <div style="margin-top:8px; padding:12px; background:var(--green-light); border-radius:8px; color:#166534; font-size:15px;">
+                <b>正确答案：</b> ${formatAnsDisplay(q.answer)}
+            </div>
+        </div>`;
+    });
+    
+    html += `<button onclick="location.reload()" class="s-submit-btn" style="width:100%; background:var(--card); color:var(--text); border:2px solid var(--border); margin-bottom:40px;">🏠 阅毕，返回首页</button>`;
+    
+    document.getElementById('hwQuestionArea').innerHTML = html;
 }
 
 // ================== 互动直播课 ==================
@@ -436,7 +492,6 @@ function enterMode(m) {
     });
 }
 
-// 构建左侧题目导航（教师端专属）
 function buildLiveSidebar() {
     let html = '<div style="display:flex; flex-wrap:wrap;">'; 
     ALL_QUESTIONS.forEach(q => { html += `<button class="t-q-btn" id="tSidebarBtn_${q.id}" onclick="liveSelectQ(${q.id})">${q.id}</button>`; });
@@ -444,41 +499,31 @@ function buildLiveSidebar() {
     document.getElementById('tSidebar').innerHTML = html;
 }
 
-// ★ 老师专属的本地答题函数，边讲课边示范，自动显示到下面的仪表盘里
 function teacherSelectAns(val) {
-    // 移除所有按钮的高亮
     document.querySelectorAll('#tMain .s-opt-btn, #tMain .s-tf-btn').forEach(b => b.style.borderColor = 'var(--border)');
-    // 给老师点中的按钮加上高亮
     let targetBtn = document.getElementById('topt_' + val);
     if(targetBtn) targetBtn.style.borderColor = '#4A90E2';
-    
-    // 把老师的答案加入到本地统计里
     liveSubmissions["老师(我)"] = val;
     renderLiveDashboard();
 }
 
-// ★ 教师端的题目展示，现在支持老师自己点击答题了
 function liveSelectQ(id) {
     currentLiveQId = id; liveSubmissions = {}; const q = Q_MAP[id];
     
-    // 更新左侧侧边栏高亮状态
     document.querySelectorAll('.t-q-btn').forEach(btn => btn.classList.remove('active'));
     let activeBtn = document.getElementById(`tSidebarBtn_${id}`);
     if(activeBtn) activeBtn.classList.add('active');
     
-    // 1. 听力部分
     let audioHtml = '';
     if (q.section === '听力') {
         if(q.audio) { audioHtml = `<div class="audio-box"><audio controls style="width:100%"><source src="${q.audio}" type="audio/mpeg"></audio></div>`; }
         else if (q.script) { audioHtml = `<div class="audio-box"><button class="tts-btn" onclick="playAudioOrTTS(${q.id})">🔊 播放听力录音</button></div>`; }
     }
 
-    // 2. 题干部分
     let bodyHtml = '';
     if (q.body) bodyHtml = `<div class="q-body">${escHtml(q.body)}</div>`;
     if (q.statement) bodyHtml = `<div class="q-body">★ ${escHtml(q.statement)}</div>`;
 
-    // 3. 选项部分 (使用 <button> 并绑定 teacherSelectAns，让老师可以点)
     let inputHtml = '';
     if (q.type === 'choice' && q.options) {
         inputHtml = '<div class="s-options">';
@@ -498,7 +543,6 @@ function liveSelectQ(id) {
         inputHtml = `<p style="color:var(--text2);font-size:14px;margin-bottom:10px;">此题为主观题，请口头指导学生回答。</p>`;
     }
 
-    // 4. 教师端底部操作按钮组
     let actionBtns = `
         <div style="display:flex; gap:12px; margin-top:15px; padding-top:20px; border-top:1px dashed var(--border);">
             <button class="t-btn t-btn-push" onclick="mqttClient.publish(TOPIC_Q, JSON.stringify({qId:${q.id}}))">📢 发放/重发本题</button>
@@ -506,7 +550,6 @@ function liveSelectQ(id) {
         </div>
     `;
 
-    // 5. 渲染到大屏中间
     document.getElementById('tMain').innerHTML = `
         <div class="s-question" style="max-width:100%; border:2px solid var(--accent); margin:0 0 16px 0;">
             <div class="q-num">👑 当前同步给全班：第 ${q.id} 题 · ${q.section} ${q.part || ''}</div>
@@ -523,7 +566,6 @@ function liveSelectQ(id) {
         </div>
     `;
     
-    // 自动向全班推送
     mqttClient.publish(TOPIC_Q, JSON.stringify({qId: q.id}));
 }
 
@@ -583,7 +625,6 @@ function liveSendAns(val) {
 function renderLiveStudentReveal(correctAns) {
     const resBox = document.getElementById('liveResultBox'); if(!resBox) return;
     
-    // 互动直播课忽略大小写和空格的判定逻辑
     let myAns = String(liveMyAnswer || '').toUpperCase().replace(/\s/g, '');
     let cAns = String(correctAns || '').toUpperCase().replace(/\s/g, '');
     
