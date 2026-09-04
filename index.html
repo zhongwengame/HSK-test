@@ -35,7 +35,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
 .header .status .dot.on{background:var(--green)}
 .back-btn{background:none;border:none;font-size:14px;color:var(--accent);cursor:pointer;padding:4px 8px}
 
-/* ── 试题通用样式 (学生、课后练习、教师端共用) ── */
+/* ── 试题通用样式 ── */
 .s-wrap{padding:16px;max-width:600px;margin:0 auto}
 .s-name-section{background:var(--card);border-radius:var(--radius);padding:20px;border:1px solid var(--border);margin-bottom:16px}
 .s-name-section label{font-size:14px;font-weight:600;display:block;margin-bottom:8px}
@@ -80,6 +80,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
 
 .pulse{animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
+
+/* ── 新增：成绩与批改查询弹窗与一题一栏样式 ── */
+.modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.6);display:flex;justify-content:center;align-items:center;z-index:1000;padding:15px;}
+.modal-content{background:#fff;width:100%;max-width:600px;border-radius:16px;padding:24px;max-height:85vh;overflow-y:auto;box-shadow:0 10px 30px rgba(0,0,0,0.2);}
+.query-item-card{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:12px;text-align:left;}
+.query-item-card.wrong{border-left:5px solid var(--red);}
+.query-item-card.manual{border-left:5px solid #f59e0b;}
+.query-item-title{font-weight:bold;font-size:15px;margin-bottom:6px;display:flex;justify-content:space-between;}
+.query-item-body{font-size:14px;color:#333;line-height:1.5;white-space:pre-wrap;}
 </style>
 </head>
 <body>
@@ -88,6 +97,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
 <div class="center-view" id="testCatalogView">
   <h1>📚 HSK 智能测试大厅</h1>
   <p>请选择要进行的课程或试卷</p>
+  
+  <!-- 新增：查成绩与看批改入口按钮 -->
+  <button onclick="openQueryModal()" style="background:#8e44ad; color:white; border:none; padding:12px 24px; border-radius:30px; font-size:15px; font-weight:bold; cursor:pointer; box-shadow: 0 4px 12px rgba(142,68,173,0.2);">
+    🔍 查询以往成绩与老师批改反馈
+  </button>
+
   <div class="test-grid" id="testGrid">
       <!-- 试卷列表将由 JS 动态生成在此处 -->
   </div>
@@ -177,9 +192,27 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
   </div>
 </div>
 
+<!-- 新增：查询成绩与老师批改弹窗 -->
+<div id="queryModal" class="modal-overlay" style="display:none">
+  <div class="modal-content">
+    <h3 style="color:var(--accent);margin-bottom:15px;text-align:center;">🔍 查询成绩与老师批改</h3>
+    
+    <div style="margin-bottom:15px;">
+      <label style="font-size:14px;font-weight:600;display:block;margin-bottom:6px;">输入提交时填写的姓名：</label>
+      <input type="text" id="queryNameInput" placeholder="请输入你的姓名" class="s-text-input" style="padding:10px 14px;">
+    </div>
+    
+    <button onclick="fetchStudentResult()" class="s-submit-btn" style="width:100%;background:#8e44ad;">立即查询</button>
+    <button onclick="closeQueryModal()" class="s-submit-btn" style="width:100%;background:none;color:#666;margin-top:6px;border:none;">关闭</button>
+
+    <!-- 结果展示区域 (每题一栏) -->
+    <div id="queryResultDisplay" style="margin-top:20px;display:none;"></div>
+  </div>
+</div>
+
 <script>
 // ==========================================
-// ⭐ 第一步：大厅试卷目录配置区 (可自由增删) ⭐
+// ⭐ 第一步：大厅试卷目录配置区 ⭐
 // ==========================================
 const TEST_CATALOG = [
     { id: "H4_11", title: "第11课", subtitle: "读书好，读好书，好读书" },
@@ -195,7 +228,7 @@ const TEST_CATALOG = [
 ];
 
 // ==========================================
-// ⭐ 第二步：你的专属底层配置 ⭐
+// ⭐ 第二步：底层配置 ⭐
 // ==========================================
 const MY_ROOM_ID = 'Wang_HSK_2024'; 
 const WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbwMzONEKnw-Va5vD1Q0u0lbywAXejZj4xBgB4gYCEuial-fNrJFN1cjnqHaGE6QtJdiuA/exec";
@@ -270,7 +303,6 @@ function playAudioOrTTS(qId) {
     const q = Q_MAP[qId]; if(!q) return;
     window.speechSynthesis.cancel();
     if (q.audio) {
-        // 如果是错题本页面，会有多个独立的 audio 标签，所以这里判断如果是独立的就播放
         const audioEl = document.getElementById('audioPlayer_' + qId) || document.getElementById('audioPlayer');
         if(audioEl) { audioEl.src = q.audio; audioEl.play(); }
     } else if (q.script) {
@@ -282,7 +314,7 @@ function playAudioOrTTS(qId) {
 
 // ================== 课后自主练习 ==================
 let hwIndex = 0; let hwAnswers = {};
-let currentMistakes = []; // 🌟 新增：用来存当前错题
+let currentMistakes = [];
 
 function saveProgress() {
     if (!currentTestId) return;
@@ -373,14 +405,13 @@ function hwSubmit() {
     document.getElementById('hwNavGroup').style.display = 'none';
 
     let correctCount = 0, totalObj = 0, details = [], mistakes = {};
-    currentMistakes = []; // 清空之前的错题记录
+    currentMistakes = [];
 
     ALL_QUESTIONS.forEach(q => {
         const uAns = hwAnswers[q.id]; const displayAns = uAns === undefined ? "未作答" : uAns;
         let isCorrect = "需人工批改";
         if(q.gradeMode !== 'manual') {
             totalObj++; isCorrect = "错误"; let wrong = true;
-            // 忽略大小写及空格判定
             if(q.type === 'text_input' && q.gradeMode === 'auto_char') {
                 let cleanUAns = String(uAns || "").toUpperCase().replace(/\s/g, '');
                 let cleanCAns = String(q.answer || "").toUpperCase().replace(/\s/g, '');
@@ -390,7 +421,7 @@ function hwSubmit() {
             }
             if(wrong) { 
                 if(!mistakes[q.section]) mistakes[q.section] = 0; mistakes[q.section]++; 
-                currentMistakes.push(q); // 🌟 记录错题
+                currentMistakes.push(q);
             }
         }
         details.push({ 题号: q.id, 题型: q.section, 你的答案: displayAns, 正确答案: q.answer, 结果: isCorrect });
@@ -405,25 +436,26 @@ function hwSubmit() {
     .then(r => r.json()).then(res => {
         localStorage.removeItem('hsk_progress_' + currentTestId);
         
-        // 🌟 动态生成错题按钮
         let reviewBtnHtml = currentMistakes.length > 0 
-            ? `<button onclick="renderMistakesView()" class="s-submit-btn" style="width:100%; margin-top:20px; background:var(--red);">🔍 查看错题 (${currentMistakes.length})</button>`
-            : `<p style="color:var(--green); font-weight:bold; margin-top:20px; font-size:18px;">🎉 太棒了，全部正确！没有错题。</p>`;
+            ? `<button onclick="renderMistakesView()" class="s-submit-btn" style="width:100%; margin-top:15px; background:var(--red);">🔍 本地查看错题 (${currentMistakes.length})</button>`
+            : `<p style="color:var(--green); font-weight:bold; margin-top:15px; font-size:16px;">🎉 客观题全对！</p>`;
 
         document.getElementById('hwQuestionArea').innerHTML = `
             <div style="background:var(--green-light);border:1px solid var(--green);border-radius:12px;padding:30px;text-align:center;">
                 <div style="font-size:40px;margin-bottom:10px">✅</div>
-                <h2 style="color:#166534;margin-bottom:15px">测试完成！</h2>
+                <h2 style="color:#166534;margin-bottom:15px">测试已成功提交！</h2>
                 <p>客观题得分：<b style="font-size:20px">${score}分</b> (${correctCount}/${totalObj})</p>
                 ${reviewBtnHtml}
-                <button onclick="location.reload()" class="s-submit-btn" style="width:100%; margin-top:12px; background:var(--card); color:var(--text); border:1px solid var(--border);">🏠 返回首页</button>
+                
+                <!-- 新增：提交后直接查看老师批改反馈按钮 -->
+                <button onclick="openQueryModal('${name}')" class="s-submit-btn" style="width:100%; margin-top:10px; background:#8e44ad;">📑 查成绩 / 看老师后续批改</button>
+                <button onclick="location.reload()" class="s-submit-btn" style="width:100%; margin-top:10px; background:var(--card); color:var(--text); border:1px solid var(--border);">🏠 返回首页</button>
             </div>`;
     }).catch(e => {
         document.getElementById('hwQuestionArea').innerHTML += '<p style="color:red;text-align:center">网络原因上传失败，请截图保留分数发给老师。</p>';
     });
 }
 
-// 🌟 格式化答案显示 (判断题显示对错)
 function formatAnsDisplay(ans) {
     if(ans === true) return "✓ 对";
     if(ans === false) return "✗ 错";
@@ -431,9 +463,8 @@ function formatAnsDisplay(ans) {
     return escHtml(String(ans));
 }
 
-// 🌟 新增：渲染错题本界面
 function renderMistakesView() {
-    window.scrollTo(0, 0); // 滚动到顶部
+    window.scrollTo(0, 0);
     let html = `<h2 style="color:var(--red); text-align:center; margin-bottom:20px;">🔍 错题本</h2>`;
     
     currentMistakes.forEach(q => {
@@ -635,6 +666,84 @@ function renderLiveStudentReveal(correctAns) {
         resBox.style.color = '#dc2626'; 
         resBox.innerText = `❌ 正确答案是: ${correctAns}`; 
     }
+}
+
+// ==========================================
+// ⭐ 新增：查询成绩与老师批改前端逻辑 ⭐
+// ==========================================
+function openQueryModal(defaultName) {
+    document.getElementById('queryModal').style.display = 'flex';
+    if(defaultName) {
+        document.getElementById('queryNameInput').value = defaultName;
+    }
+}
+
+function closeQueryModal() {
+    document.getElementById('queryModal').style.display = 'none';
+}
+
+function fetchStudentResult() {
+    const name = document.getElementById('queryNameInput').value.trim();
+    if(!name) {
+        alert("请先输入姓名！");
+        return;
+    }
+
+    const displayBox = document.getElementById('queryResultDisplay');
+    displayBox.style.display = 'block';
+    displayBox.innerHTML = `<div style="text-align:center;padding:20px;color:var(--accent);">⏳ 正在向 Google 表格调取数据...</div>`;
+
+    fetch(WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({
+            action: "queryResult",
+            name: name,
+            testId: currentTestId || ""
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if(data.notFound) {
+            displayBox.innerHTML = `<div style="text-align:center;color:var(--red);padding:15px;">❌ 找不到学生【${name}】的提交记录。<br>请检查姓名是否和提交时完全一致。</div>`;
+            return;
+        }
+
+        let html = `
+            <div style="background:var(--accent-light);padding:15px;border-radius:10px;margin-bottom:15px;text-align:center;">
+                <h4 style="color:var(--accent);font-size:16px;">${data.testName || 'HSK 测试'}</h4>
+                <p style="font-size:13px;color:#666;margin-top:4px;">学生：<b>${data.name}</b> | 时间：${data.time}</p>
+                <div style="font-size:22px;font-weight:bold;color:var(--accent);margin-top:8px;">得分：${data.score}分</div>
+                <p style="font-size:13px;color:#666;">状态：<b>${data.status}</b></p>
+            </div>
+            <h4 style="margin-bottom:10px;font-size:15px;">📋 每题批改明细：</h4>
+        `;
+
+        // 🌟 实现每题一栏排版
+        if (data.items && data.items.length > 0) {
+            data.items.forEach(item => {
+                let cardClass = item.type === '错题' ? 'wrong' : 'manual';
+                let tagColor = item.type === '错题' ? 'var(--red)' : '#f59e0b';
+
+                html += `
+                    <div class="query-item-card ${cardClass}">
+                        <div class="query-item-title">
+                            <span>第 ${item.qNum} 题 (${item.type})</span>
+                            <span style="color:${tagColor};font-size:12px;">${item.type}</span>
+                        </div>
+                        <div class="query-item-body">${escHtml(item.content)}</div>
+                    </div>
+                `;
+            });
+        } else {
+            html += `<div style="text-align:center;color:var(--green);padding:15px;">🎉 本次测试全对，且无待批改主观题！</div>`;
+        }
+
+        displayBox.innerHTML = html;
+    })
+    .catch(err => {
+        displayBox.innerHTML = `<div style="text-align:center;color:var(--red);padding:15px;">❌ 网络请求失败，请稍后重试。</div>`;
+    });
 }
 </script>
 </body>
