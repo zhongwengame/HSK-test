@@ -57,11 +57,11 @@ window.HSK_TEST_DATA = {
         { "id": 43, "section": "阅读", "part": "第三部分", "type": "choice", "instruction": "请选出正确答案", "body": "（接上题材料）有个人总是买最大号的鞋子穿，别人问他，他就会回答：“商店里的大鞋小鞋是一样的价格，为什么不买大的呢？”然而他却忘记了一点，不合脚的鞋子会让他一生都不舒服。其实，不管什么，适合自己的才是最好的。\n★这段话主要告诉我们什么？", "options": ["不能粗心", "合适最重要", "要学会拒绝", "要养成好习惯"], "answer": "B" },
 
         // ================= 三、 书写 =================
-        { "id": 44, "section": "书写", "part": "第一部分", "type": "text_input", "gradeMode": "auto_char", "instruction": "完成句子", "body": "这件事  他们  看法  完全相反  的  对于", "answer": "对于这件事，他们的看法完全相反" },
-        { "id": 45, "section": "书写", "part": "第一部分", "type": "text_input", "gradeMode": "auto_char", "instruction": "完成句子", "body": "叶子   光   掉   树上的   已经   了", "answer": "树上的叶子已经掉光了" },
-        { "id": 46, "section": "书写", "part": "第一部分", "type": "text_input", "gradeMode": "auto_char", "instruction": "完成句子", "body": "注意   警察的   一条消息   引起   网上的   了", "answer": "网上的一条消息引起了警察的注意" },
-        { "id": 47, "section": "书写", "part": "第一部分", "type": "text_input", "gradeMode": "auto_char", "instruction": "完成句子", "body": "做   的  今天   菜   放   盐    多了", "answer": "今天做的菜盐放多了" },
-        { "id": 48, "section": "书写", "part": "第一部分", "type": "text_input", "gradeMode": "auto_char", "instruction": "完成句子", "body": "他  态度  对  友好  非常  我的", "answer": "他对我的态度非常友好" },
+        { "id": 44, "section": "书写", "part": "第一部分", "type": "text_input", "gradeMode": "auto_char", "instruction": "完成句子", "body": "这件事  他们  看法  完全相反的  对于", "answer": "对于这件事，他们的看法完全相反。" },
+        { "id": 45, "section": "书写", "part": "第一部分", "type": "text_input", "gradeMode": "auto_char", "instruction": "完成句子", "body": "叶子  光  掉  树上的  已经  了", "answer": "树上的叶子已经掉光了。" },
+        { "id": 46, "section": "书写", "part": "第一部分", "type": "text_input", "gradeMode": "auto_char", "instruction": "完成句子", "body": "注意  警察的  一条消息  引起  网上的  了", "answer": "网上的一条消息引起了警察的注意。" },
+        { "id": 47, "section": "书写", "part": "第一部分", "type": "text_input", "gradeMode": "auto_char", "instruction": "完成句子", "body": "做  的  心  天  菜  放盐  多了", "answer": "今天做的菜盐放多了。" },
+        { "id": 48, "section": "书写", "part": "第一部分", "type": "text_input", "gradeMode": "auto_char", "instruction": "完成句子", "body": "他  态度  对  友好  非常  我的", "answer": "他对我的态度非常友好。" },
 
         { "id": 49, "section": "书写", "part": "第二部分", "type": "text_input", "gradeMode": "manual", "instruction": "看图，用词造句", "body": "关键词：保护 (示例图略)", "answer": "保护环境是我们每个人的责任。" },
         { "id": 50, "section": "书写", "part": "第二部分", "type": "text_input", "gradeMode": "manual", "instruction": "看图，用词造句", "body": "关键词：仔细 (示例图略)", "answer": "他仔细地看着那张画儿，好像想到了什么。" }
