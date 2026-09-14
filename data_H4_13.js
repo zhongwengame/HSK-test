@@ -1,69 +1,71 @@
-// file_name: data_H4_13.js
 window.HSK_TEST_DATA = {
     "testId": "H4_13",
     "level": "HSK 4",
     "title": "第 13 课：喝着茶看京剧",
     "questions": [
-        // ================= 一、 听力 =================
-        { "id": 1, "section": "听力", "part": "第一部分", "type": "true_false", "instruction": "判断对错", "statement": "演出已经结束了。", "answer": false },
-        { "id": 2, "section": "听力", "part": "第一部分", "type": "true_false", "instruction": "判断对错", "statement": "他介绍得很详细。", "answer": false },
-        { "id": 3, "section": "听力", "part": "第一部分", "type": "true_false", "instruction": "判断对错", "statement": "他们俩在排队买票。", "answer": true },
-        { "id": 4, "section": "听力", "part": "第一部分", "type": "true_false", "instruction": "判断对错", "statement": "京剧是中国的传统文化。", "answer": true },
-        { "id": 5, "section": "听力", "part": "第一部分", "type": "true_false", "instruction": "判断对错", "statement": "那家饭馆需要提前预约。", "answer": true },
+        // --- 听力 第一部分 (1-5) ---
+        { "id": 1, "section": "听力", "part": "第一部分", "type": "single_choice", "gradeMode": "auto_char", "instruction": "判断对错", "audio": "audio/H4_13/1.mp3", "statement": "他喜欢热闹。", "options": ["正确", "错误"], "answer": "错误" },
+        { "id": 2, "section": "听力", "part": "第一部分", "type": "single_choice", "gradeMode": "auto_char", "instruction": "判断对错", "audio": "audio/H4_13/2.mp3", "statement": "今天有京剧演出。", "options": ["正确", "错误"], "answer": "正确" },
+        { "id": 3, "section": "听力", "part": "第一部分", "type": "single_choice", "gradeMode": "auto_char", "instruction": "判断对错", "audio": "audio/H4_13/3.mp3", "statement": "小王去买红茶了。", "options": ["正确", "错误"], "answer": "错误" },
+        { "id": 4, "section": "听力", "part": "第一部分", "type": "single_choice", "gradeMode": "auto_char", "instruction": "判断对错", "audio": "audio/H4_13/4.mp3", "statement": "他还没决定买哪台电脑。", "options": ["正确", "错误"], "answer": "正确" },
+        { "id": 5, "section": "听力", "part": "第一部分", "type": "single_choice", "gradeMode": "auto_char", "instruction": "判断对错", "audio": "audio/H4_13/5.mp3", "statement": "他们在茶馆聊天。", "options": ["正确", "错误"], "answer": "正确" },
 
-        { "id": 6, "section": "听力", "part": "第二部分", "type": "choice", "instruction": "请选出正确答案", "options": ["演员", "动作", "服装", "京剧的历史"], "answer": "C" },
-        { "id": 7, "section": "听力", "part": "第二部分", "type": "choice", "instruction": "请选出正确答案", "options": ["很精彩", "有点儿无聊", "时间太长", "看不懂"], "answer": "B" },
-        { "id": 8, "section": "听力", "part": "第二部分", "type": "choice", "instruction": "请选出正确答案", "options": ["没买到票", "去迟了", "记错日期了", "天气不好"], "answer": "B" },
-        { "id": 9, "section": "听力", "part": "第二部分", "type": "choice", "instruction": "请选出正确答案", "options": ["看报纸", "打网球", "听音乐", "看杂志"], "answer": "B" },
-        { "id": 10, "section": "听力", "part": "第二部分", "type": "choice", "instruction": "请选出正确答案", "options": ["书店", "茶馆", "电影院", "大使馆"], "answer": "C" },
-        { "id": 11, "section": "听力", "part": "第二部分", "type": "choice", "instruction": "请选出正确答案", "options": ["去画展", "逛街", "看演出", "踢足球"], "answer": "A" },
-        { "id": 12, "section": "听力", "part": "第二部分", "type": "choice", "instruction": "请选出正确答案", "options": ["没带身份证", "没有带钱", "票卖完了", "排队的人多"], "answer": "C" },
+        // --- 听力 第二部分 (6-12) ---
+        { "id": 6, "section": "听力", "part": "第二部分", "type": "single_choice", "gradeMode": "auto_char", "instruction": "请选择正确答案", "audio": "audio/H4_13/6.mp3", "options": ["喝茶", "看京剧", "买衣服", "做晚饭"], "answer": "A" },
+        { "id": 7, "section": "听力", "part": "第二部分", "type": "single_choice", "gradeMode": "auto_char", "instruction": "请选择正确答案", "audio": "audio/H4_13/7.mp3", "options": ["太贵了", "演出取消了", "没买到票", "时间不合适"], "answer": "C" },
+        { "id": 8, "section": "听力", "part": "第二部分", "type": "single_choice", "gradeMode": "auto_char", "instruction": "请选择正确答案", "audio": "audio/H4_13/8.mp3", "options": ["绿茶", "红茶", "花茶", "咖啡"], "answer": "B" },
+        { "id": 9, "section": "听力", "part": "第二部分", "type": "single_choice", "gradeMode": "auto_char", "instruction": "请选择正确答案", "audio": "audio/H4_13/9.mp3", "options": ["非常有意思", "没意思", "太长了", "听不懂"], "answer": "A" },
+        { "id": 10, "section": "听力", "part": "第二部分", "type": "single_choice", "gradeMode": "auto_char", "instruction": "请选择正确答案", "audio": "audio/H4_13/10.mp3", "options": ["去公园", "去剧院", "去超市", "回家"], "answer": "B" },
+        { "id": 11, "section": "听力", "part": "第二部分", "type": "single_choice", "gradeMode": "auto_char", "instruction": "请选择正确答案", "audio": "audio/H4_13/11.mp3", "options": ["演员", "老师", "医生", "服务员"], "answer": "A" },
+        { "id": 12, "section": "听力", "part": "第二部分", "type": "single_choice", "gradeMode": "auto_char", "instruction": "请选择正确答案", "audio": "audio/H4_13/12.mp3", "options": ["电脑坏了", "忘记密码了", "作业没做完", "买错了东西"], "answer": "A" },
 
-        { "id": 13, "section": "听力", "part": "第三部分", "type": "choice", "instruction": "请选出正确答案", "options": ["去剧院", "去超市", "去大使馆", "去动物园"], "answer": "A" },
-        { "id": 14, "section": "听力", "part": "第三部分", "type": "choice", "instruction": "请选出正确答案", "options": ["没带钥匙", "找错地方了", "打不开了", "坏了"], "answer": "C" },
-        { "id": 15, "section": "听力", "part": "第三部分", "type": "choice", "instruction": "请选出正确答案", "options": ["太累了", "特别精彩", "听不懂", "观众很少"], "answer": "B" },
-        { "id": 16, "section": "听力", "part": "第三部分", "type": "choice", "instruction": "请选出正确答案", "options": ["很高兴", "很伤心", "觉得很突然", "觉得无所谓"], "answer": "A" },
-        { "id": 17, "section": "听力", "part": "第三部分", "type": "choice", "instruction": "请选出正确答案", "options": ["很多地方没听懂", "表演很精彩", "票价太贵了", "演员水平不高"], "answer": "B" },
-        { "id": 18, "section": "听力", "part": "第三部分", "type": "choice", "instruction": "请选出正确答案", "options": ["去吃晚饭", "去买衣服", "去买门票", "去打羽毛球"], "answer": "D" },
-        { "id": 19, "section": "听力", "part": "第三部分", "type": "choice", "instruction": "请选出正确答案", "options": ["互相尊重", "共同的爱好", "经济基础", "良好的习惯"], "answer": "B" },
-        { "id": 20, "section": "听力", "part": "第三部分", "type": "choice", "instruction": "请选出正确答案", "options": ["很普通", "让人感到幸福", "让人觉得麻烦", "需要花很多钱"], "answer": "B" },
-        { "id": 21, "section": "听力", "part": "第三部分", "type": "choice", "instruction": "请选出正确答案", "options": ["写材料", "做游戏", "吃点心", "喝茶聊天"], "answer": "C" },
-        { "id": 22, "section": "听力", "part": "第三部分", "type": "choice", "instruction": "请选出正确答案", "options": ["更年轻", "变得有钱", "放松心情", "更有责任感"], "answer": "D" },
+        // --- 听力 第三部分 (13-22) ---
+        { "id": 13, "section": "听力", "part": "第三部分", "type": "single_choice", "gradeMode": "auto_char", "instruction": "请选择正确答案", "audio": "audio/H4_13/13.mp3", "options": ["很有名", "很便宜", "位置不好", "人很少"], "answer": "A" },
+        { "id": 14, "section": "听力", "part": "第三部分", "type": "single_choice", "gradeMode": "auto_char", "instruction": "请选择正确答案", "audio": "audio/H4_13/14.mp3", "options": ["做准备工作", "去买票", "打电话订座位", "去洗澡"], "answer": "C" },
+        { "id": 15, "section": "听力", "part": "第三部分", "type": "single_choice", "gradeMode": "auto_char", "instruction": "请选择正确答案", "audio": "audio/H4_13/15.mp3", "options": ["喜欢安静", "喜欢热闹", "喜欢看戏", "喜欢喝茶"], "answer": "A" },
+        { "id": 16, "section": "听力", "part": "第三部分", "type": "single_choice", "gradeMode": "auto_char", "instruction": "请选择正确答案", "audio": "audio/H4_13/16.mp3", "options": ["茶文化的歴史", "喝茶的好处", "怎样泡茶", "茶叶的种类"], "answer": "B" },
+        { "id": 17, "section": "听力", "part": "第三部分", "type": "single_choice", "gradeMode": "auto_char", "instruction": "请选择正确答案", "audio": "audio/H4_13/17.mp3", "options": ["京剧的历史", "京剧的表演艺术", "著名京剧演员", "观众的反应"], "answer": "B" },
+        { "id": 18, "section": "听力", "part": "第三部分", "type": "single_choice", "gradeMode": "auto_char", "instruction": "请选择正确答案", "audio": "audio/H4_13/18.mp3", "options": ["多喝茶", "多运动", "早睡早起", "多吃水果"], "answer": "A" },
+        { "id": 19, "section": "听力", "part": "第三部分", "type": "single_choice", "gradeMode": "auto_char", "instruction": "请选择正确答案", "audio": "audio/H4_13/19.mp3", "options": ["很精彩", "一般般", "看不懂", "太吵了"], "answer": "A" },
+        { "id": 20, "section": "听力", "part": "第三部分", "type": "single_choice", "gradeMode": "auto_char", "instruction": "请选择正确答案", "audio": "audio/H4_13/20.mp3", "options": ["买票", "找座位", "买饮料", "找衣服"], "answer": "B" },
+        { "id": 21, "section": "听力", "part": "第三部分", "type": "single_choice", "gradeMode": "auto_char", "instruction": "请选择正确答案", "audio": "audio/H4_13/21.mp3", "options": ["中国茶文化", "中国传统服饰", "中国戏曲艺术", "中国美食"], "answer": "C" },
+        { "id": 22, "section": "听力", "part": "第三部分", "type": "single_choice", "gradeMode": "auto_char", "instruction": "请选择正确答案", "audio": "audio/H4_13/22.mp3", "options": ["环境优雅", "价格便宜", "交通方便", "服务态度好"], "answer": "A" },
 
-        // ================= 二、 阅读 =================
-        { "id": 23, "section": "阅读", "part": "第一部分", "type": "choice", "instruction": "选词填空：A 估计  B 基础  C 观众  D 厚  E 演出", "body": "演出非常成功，吸引了成千上万的（    ）。", "options": ["估计", "基础", "观众", "厚", "演出"], "optionKeys": ["A", "B", "C", "D", "E"], "answer": "C" },
-        { "id": 24, "section": "阅读", "part": "第一部分", "type": "choice", "instruction": "选词填空：A 估计  B 基础  C 观众  D 厚  E 演出", "body": "按现在的速度，（    ）半个小时后就能到了。", "options": ["估计", "基础", "观众", "厚", "演出"], "optionKeys": ["A", "B", "C", "D", "E"], "answer": "A" },
-        { "id": 25, "section": "阅读", "part": "第一部分", "type": "choice", "instruction": "选词填空：A 估计  B 基础  C 观众  D 厚  E 演出", "body": "今天晚上剧院有一场精彩的京剧（    ）。", "options": ["估计", "基础", "观众", "厚", "演出"], "optionKeys": ["A", "B", "C", "D", "E"], "answer": "E" },
-        { "id": 26, "section": "阅读", "part": "第一部分", "type": "choice", "instruction": "选词填空：A 估计  B 基础  C 观众  D 厚  E 演出", "body": "他的汉语（    ）很好，所以学起来特别快。", "options": ["估计", "基础", "观众", "厚", "演出"], "optionKeys": ["A", "B", "C", "D", "E"], "answer": "B" },
+        // --- 阅读 第一部分 (23-27) ---
+        { "id": 23, "section": "阅读", "part": "第一部分", "type": "single_choice", "gradeMode": "auto_char", "instruction": "选词填空：A 演出  B 丰富  C 厚  D 免费  E 重新", "body": "这本书太（  ）了，我看了很久都没看完。", "options": ["A", "B", "C", "D", "E"], "answer": "C" },
+        { "id": 24, "section": "阅读", "part": "第一部分", "type": "single_choice", "gradeMode": "auto_char", "instruction": "选词填空：A 演出  B 丰富  C 厚  D 免费  E 重新", "body": "今晚在人民剧院有一场精彩的京剧（  ）。", "options": ["A", "B", "C", "D", "E"], "answer": "A" },
+        { "id": 25, "section": "阅读", "part": "第一部分", "type": "single_choice", "gradeMode": "auto_char", "instruction": "选词填空：A 演出  B 丰富  C 厚  D 免费  E 重新", "body": "这家茶馆周日向老人们（  ）提供大碗茶。", "options": ["A", "B", "C", "D", "E"], "answer": "D" },
+        { "id": 26, "section": "阅读", "part": "第一部分", "type": "single_choice", "gradeMode": "auto_char", "instruction": "选词填空：A 演出  B 丰富  C 厚  D 免费  E 重新", "body": "他的生活非常（  ），除了工作，还喜欢唱京剧和书法。", "options": ["A", "B", "C", "D", "E"], "answer": "B" },
+        { "id": 27, "section": "阅读", "part": "第一部分", "type": "single_choice", "gradeMode": "auto_char", "instruction": "选词填空：A 演出  B 丰富  C 厚  D 免费  E 重新", "body": "电脑刚才死机了，我只能（  ）开机。", "options": ["A", "B", "C", "D", "E"], "answer": "E" },
 
-        { "id": 27, "section": "阅读", "part": "第一部分", "type": "choice", "instruction": "选词填空：A 餐厅  B 稍微  C 温度  D 申请  E 大概", "body": "A：小云，你今年夏天就要毕业了，找到工作了吗？\nB：没有，我已经（    ）了奖学金，打算出国读硕士。", "options": ["餐厅", "稍微", "温度", "申请", "大概"], "optionKeys": ["A", "B", "C", "D", "E"], "answer": "D" },
-        { "id": 28, "section": "阅读", "part": "第一部分", "type": "choice", "instruction": "选词填空：A 餐厅  B 稍微  C 温度  D 申请  E 大概", "body": "A：这次放假，你打算去三亚多长时间？\nB：（    ）两个星期吧，估计月底就能回来。", "options": ["餐厅", "稍微", "温度", "申请", "大概"], "optionKeys": ["A", "B", "C", "D", "E"], "answer": "E" },
-        { "id": 29, "section": "阅读", "part": "第一部分", "type": "choice", "instruction": "选词填空：A 餐厅  B 稍微  C 温度  D 申请  E 大概", "body": "A：刚才在（    ）和你说话那个女孩儿是谁？\nB：小李啊，新来的同事。新年晚会上我们俩一起表演的节目。", "options": ["餐厅", "稍微", "温度", "申请", "大概"], "optionKeys": ["A", "B", "C", "D", "E"], "answer": "A" },
-        { "id": 30, "section": "阅读", "part": "第一部分", "type": "choice", "instruction": "选词填空：A 餐厅  B 稍微  C 温度  D 申请  E 大概", "body": "A：下午交工作总结，你写好了没有？\nB：差不多了，有几个地方我还要（    ）改一下。", "options": ["餐厅", "稍微", "温度", "申请", "大概"], "optionKeys": ["A", "B", "C", "D", "E"], "answer": "B" },
+        // --- 阅读 第二部分 (28-37) ---
+        { "id": 28, "section": "阅读", "part": "第二部分", "type": "single_choice", "gradeMode": "auto_char", "instruction": "排列顺序", "body": "A 才能更好地理解京剧的魅力\nB 只有深入了解了中国文化\nC 很多人都认为京剧很难懂", "options": ["C-B-A", "B-A-C", "A-C-B", "C-A-B"], "answer": "C-B-A" },
+        { "id": 29, "section": "阅读", "part": "第二部分", "type": "single_choice", "gradeMode": "auto_char", "instruction": "排列顺序", "body": "A 茶不仅是一种健康的饮料\nB 中国人喝茶已经有几千年的历史了\nC 更代表着一种生活态度和文化", "options": ["B-A-C", "A-B-C", "C-A-B", "B-C-A"], "answer": "B-A-C" },
+        { "id": 30, "section": "阅读", "part": "第二部分", "type": "single_choice", "gradeMode": "auto_char", "instruction": "排列顺序", "body": "A 如果你想买一台高性价比的电脑\nB 建议你多对比几个品牌\nC 然后再做出决定", "options": ["A-B-C", "B-A-C", "C-A-B", "A-C-B"], "answer": "A-B-C" },
+        { "id": 31, "section": "阅读", "part": "第二部分", "type": "single_choice", "gradeMode": "auto_char", "instruction": "排列顺序", "body": "A 他在台上的每一个动作都非常标准\nB 这位演员从小就开始练习京剧\nC 所以获得了观众们的一致好评", "options": ["B-A-C", "A-B-C", "C-B-A", "B-C-A"], "answer": "B-A-C" },
+        { "id": 32, "section": "阅读", "part": "第二部分", "type": "single_choice", "gradeMode": "auto_char", "instruction": "排列顺序", "body": "A 我们去附近的那家新茶馆坐坐吧\nB 听说那里的环境特别优雅\nC 还可以边喝茶边听传统戏曲", "options": ["A-B-C", "B-A-C", "C-A-B", "A-C-B"], "answer": "A-B-C" },
+        { "id": 33, "section": "阅读", "part": "第二部分", "type": "single_choice", "gradeMode": "auto_char", "instruction": "排列顺序", "body": "A 遇到不认识的生字时\nB 你可以先猜猜它的意思\nC 然后再去查字典确认", "options": ["A-B-C", "B-A-C", "C-A-B", "A-C-B"], "answer": "A-B-C" },
+        { "id": 34, "section": "阅读", "part": "第二部分", "type": "single_choice", "gradeMode": "auto_char", "instruction": "排列顺序", "body": "A 不仅需要演员精湛的演技\nB 还需要灯光、服装等各方面的配合\nC 一场成功的京剧表演", "options": ["C-A-B", "A-B-C", "B-C-A", "C-B-A"], "answer": "C-A-B" },
+        { "id": 35, "section": "阅读", "part": "第二部分", "type": "single_choice", "gradeMode": "auto_char", "instruction": "排列顺序", "body": "A 正好可以借这个机会放松一下\nB 这周末公司安排大家去郊游\nC 平时工作太辛苦了", "options": ["B-C-A", "A-B-C", "C-B-A", "B-A-C"], "answer": "B-C-A" },
+        { "id": 36, "section": "阅读", "part": "第二部分", "type": "single_choice", "gradeMode": "auto_char", "instruction": "排列顺序", "body": "A 虽然这本说明书很厚\nB 但里面的内容非常详细\nC 遇到问题时查询很方便", "options": ["A-B-C", "B-A-C", "C-A-B", "A-C-B"], "answer": "A-B-C" },
+        { "id": 37, "section": "阅读", "part": "第二部分", "type": "single_choice", "gradeMode": "auto_char", "instruction": "排列顺序", "body": "A 喝热茶对肠胃有好处\nB 特别是在寒冷的冬天\nC 一杯热茶能让人感到非常温暖", "options": ["A-B-C", "B-C-A", "C-A-B", "A-C-B"], "answer": "A-B-C" },
 
-        { "id": 31, "section": "阅读", "part": "第二部分", "type": "text_input", "gradeMode": "auto_char", "instruction": "排列顺序 (请输入ABC)", "body": "A 写得特别详细,而且十分有趣\nB 这本杂志介绍了中国很多著名的景点\nC 其中介绍黄河的那一篇", "answer": "BCA" },
-        { "id": 32, "section": "阅读", "part": "第二部分", "type": "text_input", "gradeMode": "auto_char", "instruction": "排列顺序 (请输入ABC)", "body": "A 随着科技的发展,人与人的联系越来越方便\nB 上网发电子邮件越来越普遍\nC 相反,写信的人变得越来越少了", "answer": "ABC" },
-        { "id": 33, "section": "阅读", "part": "第二部分", "type": "text_input", "gradeMode": "auto_char", "instruction": "排列顺序 (请输入ABC)", "body": "A 不仅内容十分丰富\nB 观众普遍认为这部电影不错\nC 演员们演得也非常好", "answer": "BAC" },
-        { "id": 34, "section": "阅读", "part": "第二部分", "type": "text_input", "gradeMode": "auto_char", "instruction": "排列顺序 (请输入ABC)", "body": "A 上次的春游活动小夏组织得不错\nB 这次还是由她来负责安排吧\nC 大家都玩儿得高兴", "answer": "ACB" },
+        // --- 阅读 第三部分 (38-43) ---
+        { "id": 38, "section": "阅读", "part": "第三部分", "type": "single_choice", "gradeMode": "auto_char", "instruction": "请选择正确答案", "body": "京剧是中国的国粹，有着两百多年的历史。京剧的表演艺术形式丰富多彩，融合了唱、念、做、打等多种形式。要看懂京剧，不仅需要了解故事背景，还要体会演员的眼神和动作。\n★ 关于京剧，下列哪项正确？", "options": ["发展历史很短", "表演形式单一", "是中国国粹", "年轻人都不喜欢"], "answer": "C" },
+        { "id": 39, "section": "阅读", "part": "第三部分", "type": "single_choice", "gradeMode": "auto_char", "instruction": "请选择正确答案", "body": "在老北京的茶馆里，人们不仅可以品尝美味的茶水，还能听到精彩的京剧和相声。茶馆成为了人们休闲、社交和感受传统文化的重要场所。\n★ 老北京茶馆的作用是什么？", "options": ["仅仅是喝茶", "提供休闲和社交场所", "卖便宜的商品", "教人们唱京剧"], "answer": "B" },
+        { "id": 40, "section": "阅读", "part": "第三部分", "type": "single_choice", "gradeMode": "auto_char", "instruction": "请选择正确答案", "body": "选择电脑时，不要只看外观和价格，更重要的是看配置和性能。根据自己的实际需求来选择，才能买到最适合自己的电脑。\n★ 购买电脑时最应该看重什么？", "options": ["外观漂亮", "价格昂贵", "配置和性能", "品牌广告"], "answer": "C" },
+        { "id": 41, "section": "阅读", "part": "第三部分", "type": "single_choice", "gradeMode": "auto_char", "instruction": "请选择正确答案", "body": "长期喝茶叶水对身体健康大有好处。茶中含有丰富的营养成分，能够帮助消化、提神醒脑，还可以降低患心脏病的风险。\n★ 经常喝茶有什么好处？", "options": ["能让人很快入睡", "对身体健康有益", "可以替代药物", "会增加心脏负担"], "answer": "B" },
+        { "id": 42, "section": "阅读", "part": "第三部分", "type": "single_choice", "gradeMode": "auto_char", "instruction": "请选择正确答案", "body": "优秀的演员为了演好角色，往往需要花费大量的时间去研究角色的性格和心理。只有真正走入角色的内心世界，才能呈现出动人的表演。\n★ 优秀的演员怎样才能演好角色？", "options": ["靠漂亮的衣服", "研究角色的心理", "多赚演出费", "完全听从导演指令"], "answer": "B" },
+        { "id": 43, "section": "阅读", "part": "第三部分", "type": "single_choice", "gradeMode": "auto_char", "instruction": "请选择正确答案", "body": "学习一门语言，最重要的是保持持久的兴趣和耐心。不要因为短期内看不到效果就放弃，每天积累一点点，时间长了自然会有很大的进步。\n★ 学习语言最需要什么？", "options": ["天天考试", "兴趣和耐心", "买昂贵的教材", "找名师一对一"], "answer": "B" },
 
-        { "id": 35, "section": "阅读", "part": "第三部分", "type": "choice", "instruction": "请选出正确答案", "body": "我们对失败应该有正确的认识。偶尔的失败其实可以让我们清楚自己还有什么地方需要提高，这可以帮助我们走向最后的成功。\n★ “这”指的是：", "options": ["仔细考虑", "积极参加", "失败结果", "正确认识"], "answer": "D" },
-        { "id": 36, "section": "阅读", "part": "第三部分", "type": "choice", "instruction": "请选出正确答案", "body": "我来北京以前，已经学过一段时间汉语。所以，对我来说，一年级的汉语课，听和说很容易，只是写汉字有点儿难，需要多练习几遍。\n★ 关于他，可以知道什么？", "options": ["是北京人", "学过汉语", "是汉语老师", "不会说中文"], "answer": "B" },
-        { "id": 37, "section": "阅读", "part": "第三部分", "type": "choice", "instruction": "请选出正确答案", "body": "研究发现，有些吃的或喝的，如牛奶和香蕉，可以帮助入睡。而有些东西，如咖啡、茶，容易使人兴奋，影响正常的休息。\n★ 根据这段话，喝什么会让人兴奋？", "options": ["咖啡", "牛奶", "果汁", "啤酒"], "answer": "A" },
-        { "id": 38, "section": "阅读", "part": "第三部分", "type": "choice", "instruction": "请选出正确答案", "body": "正式的邀请信当然要由举办者写，信中首先要说明活动的详细内容，然后要对被邀请的人的能力表示肯定，并说明他们被邀请参加活动的原因，最后希望他们能够参加。\n★ 关于邀请信，可以知道：", "options": ["邀请效果很好", "不用写得太详细", "请专门的公司写", "要肯定被邀请人"], "answer": "D" },
-        { "id": 39, "section": "阅读", "part": "第三部分", "type": "choice", "instruction": "请选出正确答案", "body": "一些电影院不让观众自己带吃的、饮料，人们不得不买电影院卖的东西。很多观众对这种做法很不满意，因为电影院的东西特别贵，大约比超市贵三倍。\n★ 观众对什么不满意？", "options": ["票价高", "座位少", "东西太贵", "电影不精彩"], "answer": "C" },
+        // --- 书写 第一部分 (44-48) ---
+        { "id": 44, "section": "书写", "part": "第一部分", "type": "text_input", "gradeMode": "auto_char", "instruction": "完成句子", "body": "京剧  表演  这场  精彩  非常", "answer": "这场京剧表演非常精彩" },
+        { "id": 45, "section": "书写", "part": "第一部分", "type": "text_input", "gradeMode": "auto_char", "instruction": "完成句子", "body": "他  茶馆  在  朋友  和  聊天", "answer": "他在茶馆和朋友聊天" },
+        { "id": 46, "section": "书写", "part": "第一部分", "type": "text_input", "gradeMode": "auto_char", "instruction": "完成句子", "body": "这本书  很厚  看起来  确实", "answer": "这本书看起来确实很厚" },
+        { "id": 47, "section": "书写", "part": "第一部分", "type": "text_input", "gradeMode": "auto_char", "instruction": "完成句子", "body": "这家  免费  茶馆  提供  大碗茶", "answer": "这家茶馆免费提供大碗茶" },
+        { "id": 48, "section": "书写", "part": "第一部分", "type": "text_input", "gradeMode": "auto_char", "instruction": "完成句子", "body": "电脑  又  能  正常工作  了  终于", "answer": "电脑终于又能正常工作了" },
 
-        { "id": 40, "section": "阅读", "part": "第三部分", "type": "choice", "instruction": "请选出正确答案", "body": "在很多人看来，听流行音乐仅仅是年轻人的爱好，京剧、老歌才是老年人的最爱。其实，听听流行音乐对老年人也是很有好处的。流行音乐有很多种，老年人只要选择适合自己的，一样可以心情愉快，还能拉近和年轻人之间的距离。\n★ 根据这段话，人们一般认为老年人喜欢：", "options": ["开玩笑", "流行音乐", "听过去的歌", "跟朋友见面"], "answer": "C" },
-        { "id": 41, "section": "阅读", "part": "第三部分", "type": "choice", "instruction": "请选出正确答案", "body": "（接上题材料）在很多人看来，听流行音乐仅仅是年轻人的爱好，京剧、老歌才是老年人的最爱。其实，听听流行音乐对老年人也是很有好处的。流行音乐有很多种，老年人只要选择适合自己的，一样可以心情愉快，还能拉近和年轻人之间的距离。\n★ 关于流行音乐，可以知道什么？", "options": ["比京剧精彩", "让人变浪漫", "不适合老人", "有许多好处"], "answer": "D" },
-        { "id": 42, "section": "阅读", "part": "第三部分", "type": "choice", "instruction": "请选出正确答案", "body": "世界上第一部无声电影出现的时候，吸引了成千上万的观众。有个女观众看到电影中有一辆马车向自己跑过来，害怕得马上跑得远远的，直到那辆马车在画面中不见了，她才坐回来。有的观众看到电影里下雨的画面，把自己的雨伞也打了起来。现在我们都觉得挺好笑的。但是看电影在当时确实是个新鲜事儿。\n★ 世界上第一部无声电影：", "options": ["很幽默", "不成功", "观众很多", "内容复杂"], "answer": "C" },
-        { "id": 43, "section": "阅读", "part": "第三部分", "type": "choice", "instruction": "请选出正确答案", "body": "（接上题材料）世界上第一部无声电影出现的时候，吸引了成千上万的观众。有个女观众看到电影中有一辆马车向自己跑过来，害怕得马上跑得远远的，直到那辆马车在画面中不见了，她才坐回来。有的观众看到电影里下雨的画面，把自己的雨伞也打了起来。现在我们都觉得挺好笑的。但是看电影在当时确实是个新鲜事儿。\n★ 那些观众看电影时为什么要打伞？", "options": ["误会了", "下雨了", "风太大", "害怕马车"], "answer": "A" },
-
-        // ================= 三、 书写 =================
-        { "id": 44, "section": "书写", "part": "第一部分", "type": "text_input", "gradeMode": "auto_char", "instruction": "完成句子", "body": "内容  十分  那本  杂志  的  丰富", "answer": "那本杂志的内容十分丰富" },
-        { "id": 45, "section": "书写", "part": "第一部分", "type": "text_input", "gradeMode": "auto_char", "instruction": "完成句子", "body": "寄    出去    了    你的   申请材料  吗", "answer": "你的申请材料寄出去了吗" },
-        { "id": 46, "section": "书写", "part": "第一部分", "type": "text_input", "gradeMode": "auto_char", "instruction": "完成句子", "body": "演员  最   有名的  他     是   20世纪", "answer": "他是20世纪最有名的演员" },
-        { "id": 47, "section": "书写", "part": "第一部分", "type": "text_input", "gradeMode": "auto_char", "instruction": "完成句子", "body": "的问题     超出了   他说   讨论的   内容", "answer": "他说的问题超出了讨论的内容" },
-        { "id": 48, "section": "书写", "part": "第一部分", "type": "text_input", "gradeMode": "auto_char", "instruction": "完成句子", "body": "电脑   又     能    正常工作     了    终于", "answer": "电脑终于又能正常工作了" },
-
+        // --- 书写 第二部分 (49-50) ---
         { "id": 49, "section": "书写", "part": "第二部分", "type": "text_input", "gradeMode": "manual", "instruction": "看图，用词造句", "body": "关键词：演员", "answer": "他们俩是中国著名的京剧演员，很多观众都非常喜欢他们。" },
         { "id": 50, "section": "书写", "part": "第二部分", "type": "text_input", "gradeMode": "manual", "instruction": "看图，用词造句", "body": "关键词：错误", "answer": "这个题要求我们判断是正确还是错误。" }
     ]
