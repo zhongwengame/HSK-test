@@ -14,18 +14,18 @@ window.HSK_TEST_DATA = {
         { "id": 7, "section": "听力", "part": "第二部分", "type": "multiple_choice", "instruction": "请选出正确答案", "question": "问：...", "options": ["带吃的", "放衣服", "扔垃圾", "送到山上"], "answer": "C" },
         { "id": 8, "section": "听力", "part": "第二部分", "type": "multiple_choice", "instruction": "请选出正确答案", "question": "问：...", "options": ["没调查完", "关于保护动物", "10% 的人不感兴趣", "大部分人愿意参加"], "answer": "D" },
         { "id": 9, "section": "听力", "part": "第二部分", "type": "multiple_choice", "instruction": "请选出正确答案", "question": "问：...", "options": ["再使用", "扔垃圾桶", "打网球", "放垃圾"], "answer": "A" },
-        { "id": 10, "section": "听力", "part": "第二部分", "type": "multiple_choice", "instruction": "请选出正确答案", "question": "问：...", "options": ["正在出差", "忘了时间", "不想见面", "感到抱歉"], "answer": "C" },
-        { "id": 11, "section": "听力", "part": "第二部分", "type": "multiple_choice", "instruction": "请选出正确答案", "question": "问：...", "options": ["牙刷", "牙膏", "饮料", "塑料袋"], "answer": "D" },
-        { "id": 12, "section": "听力", "part": "第二部分", "type": "multiple_choice", "instruction": "请选出正确答案", "question": "问：...", "options": ["目的", "方法", "过程", "结果"], "answer": "B" },
+        { "id": 10, "section": "听力", "part": "第二部分", "type": "multiple_choice", "instruction": "请选出正确答案", "question": "问：...", "options": ["正在出差", "忘了时间", "不想见面", "感到抱歉"], "answer": "D" },
+        { "id": 11, "section": "听力", "part": "第二部分", "type": "multiple_choice", "instruction": "请选出正确答案", "question": "问：...", "options": ["牙刷", "牙膏", "饮料", "塑料袋"], "answer": "B" },
+        { "id": 12, "section": "听力", "part": "第二部分", "type": "multiple_choice", "instruction": "请选出正确答案", "question": "问：...", "options": ["目的", "方法", "过程", "结果"], "answer": "C" },
 
         { "id": 13, "section": "听力", "part": "第三部分", "type": "multiple_choice", "instruction": "请选出正确答案", "question": "问：...", "options": ["挺舒服", "正合适", "更漂亮", "容易脏"], "answer": "D" },
-        { "id": 14, "section": "听力", "part": "第三部分", "type": "multiple_choice", "instruction": "请选出正确答案", "question": "问：...", "options": ["有人接女的", "女的坐出租车回来的", "男的写完材料了", "女的帮男的检查"], "answer": "D" },
+        { "id": 14, "section": "听力", "part": "第三部分", "type": "multiple_choice", "instruction": "请选出正确答案", "question": "问：...", "options": ["有人接女的", "女的坐出租车回来的", "男的写完材料了", "女的帮男的检查"], "answer": "B" },
         { "id": 15, "section": "听力", "part": "第三部分", "type": "multiple_choice", "instruction": "请选出正确答案", "question": "问：...", "options": ["空调卖光了", "这个月没有上个月热", "商场的活动很吸引人", "空调卖得跟上个月一样多"], "answer": "C" },
-        { "id": 16, "section": "听力", "part": "第三部分", "type": "multiple_choice", "instruction": "请选出正确答案", "question": "问：...", "options": ["他们一起回来的", "家里停电了", "邻居来了", "灯有问题"], "answer": "B" },
+        { "id": 16, "section": "听力", "part": "第三部分", "type": "multiple_choice", "instruction": "请选出正确答案", "question": "问：...", "options": ["他们一起回来的", "家里停电了", "邻居来了", "灯有问题"], "answer": "D" },
         { "id": 17, "section": "听力", "part": "第三部分", "type": "multiple_choice", "instruction": "请选出正确答案", "question": "问：...", "options": ["他生病了", "姐姐喜欢狗", "他要出差", "他周六加班"], "answer": "C" },
-        { "id": 18, "section": "听力", "part": "第三部分", "type": "multiple_choice", "instruction": "请选出正确答案", "question": "问：...", "options": ["宾馆", "图书馆", "饭馆", "体育馆"], "answer": "A" },
-        { "id": 19, "section": "听力", "part": "第三部分", "type": "multiple_choice", "instruction": "请选出正确答案", "question": "问：...", "options": ["上班时间", "堵车情况", "城市区别", "地铁优点"], "answer": "B" },
-        { "id": 20, "section": "听力", "part": "第三部分", "type": "multiple_choice", "instruction": "请选出正确答案", "question": "问：...", "options": ["3 块", "8 块", "1 块", "2 块"], "answer": "D" },
+        { "id": 18, "section": "听力", "part": "第三部分", "type": "multiple_choice", "instruction": "请选出正确答案", "question": "问：...", "options": ["宾馆", "图书馆", "饭馆", "体育馆"], "answer": "D" },
+        { "id": 19, "section": "听力", "part": "第三部分", "type": "multiple_choice", "instruction": "请选出正确答案", "question": "问：...", "options": ["上班时间", "堵车情况", "城市区别", "地铁优点"], "answer": "D" },
+        { "id": 20, "section": "听力", "part": "第三部分", "type": "multiple_choice", "instruction": "请选出正确答案", "question": "问：...", "options": ["3 块", "8 块", "1 块", "2 块"], "answer": "A" },
         { "id": 21, "section": "听力", "part": "第三部分", "type": "multiple_choice", "instruction": "请选出正确答案", "question": "问：...", "options": ["很紧张", "没意思", "很熟悉", "很简单"], "answer": "B" },
         { "id": 22, "section": "听力", "part": "第三部分", "type": "multiple_choice", "instruction": "请选出正确答案", "question": "问：...", "options": ["坚持很重要", "非常困难", "要多听意见", "需要别人帮忙"], "answer": "A" },
 
@@ -79,11 +79,11 @@ window.HSK_TEST_DATA = {
         },
 
         // ================= 三、 书写 =================
-        { "id": 44, "section": "书写", "part": "第一部分", "type": "text_input", "gradeMode": "auto_char", "instruction": "完成句子", "body": "养成 节约 要 用水 好习惯 的", "answer": "要养成节约用水的好习惯。" },
-        { "id": 45, "section": "书写", "part": "第一部分", "type": "text_input", "gradeMode": "auto_char", "instruction": "完成句子", "body": "一个 美丽的 生活 他 在 小城市", "answer": "他在一个美丽的小城市生活。" },
-        { "id": 46, "section": "书写", "part": "第一部分", "type": "text_input", "gradeMode": "auto_char", "instruction": "完成句子", "body": "这篇 新闻 关注 了 人们的 引起", "answer": "这篇新闻引起了人们的关注。" },
-        { "id": 47, "section": "书写", "part": "第一部分", "type": "text_input", "gradeMode": "auto_char", "instruction": "完成句子", "body": "里 香蕉皮 请 垃圾桶 扔进 把", "answer": "请把香蕉皮扔进垃圾桶里。" },
-        { "id": 48, "section": "书写", "part": "第一部分", "type": "text_input", "gradeMode": "auto_char", "instruction": "完成句子", "body": "不使用 减少 是 污染 为了 塑料袋", "answer": "不使用塑料袋是为了减少污染。" },
+        { "id": 44, "section": "书写", "part": "第一部分", "type": "text_input", "gradeMode": "auto_char", "instruction": "完成句子", "body": "养成  节约  要  用水  好习惯  的", "answer": "要养成节约用水的好习惯。" },
+        { "id": 45, "section": "书写", "part": "第一部分", "type": "text_input", "gradeMode": "auto_char", "instruction": "完成句子", "body": "一个  美丽的  生活  他  在  小城市", "answer": "他在一个美丽的小城市生活。" },
+        { "id": 46, "section": "书写", "part": "第一部分", "type": "text_input", "gradeMode": "auto_char", "instruction": "完成句子", "body": "这篇   新闻   关注    了    人们的  引起", "answer": "这篇新闻引起了人们的关注。" },
+        { "id": 47, "section": "书写", "part": "第一部分", "type": "text_input", "gradeMode": "auto_char", "instruction": "完成句子", "body": "里   香蕉皮   请  垃圾桶  扔进  把", "answer": "请把香蕉皮扔进垃圾桶里。" },
+        { "id": 48, "section": "书写", "part": "第一部分", "type": "text_input", "gradeMode": "auto_char", "instruction": "完成句子", "body": "不使用   减少  是   污染  为了  塑料袋", "answer": "不使用塑料袋是为了减少污染。" },
 
         { "id": 49, "section": "书写", "part": "第二部分", "type": "text_input", "gradeMode": "manual", "instruction": "看图，用词造句", "body": "关键词：扔 (示例图略)", "answer": "请不要随便扔垃圾。" },
         { "id": 50, "section": "书写", "part": "第二部分", "type": "text_input", "gradeMode": "manual", "instruction": "看图，用词造句", "body": "关键词：乘坐 (示例图略)", "answer": "我每天乘坐地铁上班。" }
