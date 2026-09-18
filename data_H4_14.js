@@ -45,10 +45,10 @@ window.HSK_TEST_DATA = {
         { "id": 30, "section": "阅读", "part": "第一部分", "type": "choice", "instruction": "选词填空：A 扔  B 以  C 温度  D 重  E 行", "body": "A：小马，上次的工作你做得很好，所以想再交给你一个任务，希望你能完成。\nB：请您放心，我一定（）最高的标准要求自己，把它做好。", "options": ["扔", "以", "温度", "重", "行"], "optionKeys": ["A", "B", "C", "D", "E"], "answer": "B" }, // 以
 
         // 阅读第二部分 (Q31-34) - 排列顺序: 与 H4_13 结构一致
-        { "id": 31, "section": "阅读", "part": "第二部分", "type": "text_input", "gradeMode": "auto_char", "instruction": "排列顺序 (请输入ABC)", "body": { "A": "我本来不太愿意做这件事", "B": "只能尽力去做了", "C": "可既然已经答应别人了" }, "answer": "ACB" },
-        { "id": 32, "section": "阅读", "part": "第二部分", "type": "text_input", "gradeMode": "auto_char", "instruction": "排列顺序 (请输入ABC)", "body": { "A": "一定不要到处乱扔", "B": "小朋友，你们都吃完了吗", "C": "吃完了就把盒子、瓶子、塑料袋都扔垃圾桶里" }, "answer": "BCA" },
-        { "id": 33, "section": "阅读", "part": "第二部分", "type": "text_input", "gradeMode": "auto_char", "instruction": "排列顺序 (请输入ABC)", "body": { "A": "那儿的花儿都开了，非常漂亮", "B": "这几天植物园特别热闹，随着天气变暖", "C": "吸引了很多人" }, "answer": "BAC" },
-        { "id": 34, "section": "阅读", "part": "第二部分", "type": "text_input", "gradeMode": "auto_char", "instruction": "排列顺序 (请输入ABC)", "body": { "A": "所以我们必须节约用水、保护环境", "B": "地球提供给我们的水", "C": "并不是永远用不完的" }, "answer": "BCA" },
+        { "id": 31, "section": "阅读", "part": "第二部分", "type": "text_input", "gradeMode": "auto_char", "instruction": "排列顺序 (请输入ABC)", "body": "A 我本来不太愿意做这件事\nB 只能尽力去做了\nC 可既然已经答应别人了", "answer": "ACB" },
+        { "id": 32, "section": "阅读", "part": "第二部分", "type": "text_input", "gradeMode": "auto_char", "instruction": "排列顺序 (请输入ABC)", "body": "A 一定不要到处乱扔\nB 小朋友，你们都吃完了吗\nC 吃完了就把盒子、瓶子、塑料袋都扔垃圾桶里", "answer": "BCA" },
+        { "id": 33, "section": "阅读", "part": "第二部分", "type": "text_input", "gradeMode": "auto_char", "instruction": "排列顺序 (请输入ABC)", "body": "A 那儿的花儿都开了，非常漂亮\nB 这几天植物园特别热闹，随着天气变暖\nC 吸引了很多人", "answer": "BAC" },
+        { "id": 34, "section": "阅读", "part": "第二部分", "type": "text_input", "gradeMode": "auto_char", "instruction": "排列顺序 (请输入ABC)", "body": "A 所以我们必须节约用水、保护环境\nB 地球提供给我们的水\nC 并不是永远用不完的", "answer": "BCA" },
 
         // 阅读第三部分 (Q35-43) - 短文理解: 结构与 H4_13 保持一致，passage 会重复
         { "id": 35, "section": "阅读", "part": "第三部分", "type": "choice", "instruction": "请选出正确答案", "body": "很多人都说，刷牙时在牙上加点儿盐，坚持一段时间，就能使牙变白。我打算试试，看看这个方法是不是真的有效。\n★“这个方法” 指的是：", "options": ["坚持刷牙", "自备塑料袋", "皮肤增白法", "牙膏上加盐"], "answer": "D" },
