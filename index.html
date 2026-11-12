@@ -27,6 +27,32 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
 .mode-btn:hover{border-color:var(--accent);background:var(--accent-light)}
 .mode-btn span{font-size:12px;font-weight:400;color:var(--text2);display:block;margin-top:6px}
 
+/* ── 大厅双入口 + 级别/课号选择 ── */
+.hall-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;width:100%;max-width:700px;margin-top:10px}
+.hall-card{background:var(--card);border:2px solid var(--border);border-radius:16px;padding:30px 22px;cursor:pointer;text-align:center;transition:all .2s}
+.hall-card:hover{transform:translateY(-3px);box-shadow:0 6px 18px rgba(74,144,226,.12)}
+.hall-card .hc-icon{font-size:40px}
+.hall-card h3{font-size:20px;margin:10px 0 6px;color:var(--text)}
+.hall-card span{color:var(--text2);font-size:13px;display:block;line-height:1.6}
+.hall-card.wb:hover{border-color:var(--accent)}
+.hall-card.mock:hover{border-color:#8e44ad}
+.lv-pills{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;width:100%;max-width:700px}
+.lv-pill{padding:10px 22px;border:2px solid var(--border);border-radius:999px;background:var(--card);font-size:15px;font-weight:600;cursor:pointer;transition:all .15s}
+.lv-pill:hover{border-color:var(--accent);color:var(--accent)}
+.lv-pill.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.lv-pill small{font-size:11px;font-weight:400;opacity:.75;margin-left:4px}
+.test-card .avail{font-style:normal;font-size:11px;margin-top:6px;display:inline-flex;align-items:center;gap:5px;color:var(--text2)}
+.test-card .avail .dot{width:8px;height:8px;border-radius:50%;background:#ccc;display:inline-block}
+.test-card.ok .avail .dot{background:var(--green)}
+.test-card.na{opacity:.55}
+.test-card.na .avail .dot{background:#f59e0b}
+.timer-box{font-family:ui-monospace,monospace;font-weight:700;background:var(--accent-light);border:1px solid var(--accent);border-radius:8px;padding:3px 10px;color:var(--text)}
+.timer-box.warn{background:var(--red-light);border-color:var(--red);color:var(--red)}
+.sheet-btn{background:none;border:1px solid var(--border);border-radius:8px;padding:3px 10px;font-size:12px;color:var(--text2);cursor:pointer}
+.sheet-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:8px;margin-top:12px}
+.sheet-q{padding:9px 0;border:1px solid var(--border);border-radius:8px;background:var(--card);font-size:13px;font-weight:600;cursor:pointer;text-align:center}
+.sheet-q.done{background:var(--accent);border-color:var(--accent);color:#fff}
+
 /* ── 通用头部 ── */
 .header{background:var(--card);border-bottom:1px solid var(--border);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
 .header h1{font-size:17px;color:var(--accent);font-weight:700}
@@ -96,16 +122,42 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
 <!-- 首页大厅：选择试卷 -->
 <div class="center-view" id="testCatalogView">
   <h1>📚 HSK 智能测试大厅</h1>
-  <p>请选择要进行的课程或试卷</p>
-  
-  <!-- 新增：查成绩与看批改入口按钮 -->
+  <p>请选择进入方式</p>
+
+  <div class="hall-grid">
+    <div class="hall-card wb" onclick="showWbCatalog()">
+      <div class="hc-icon">📚</div>
+      <h3>练习册 Workbook</h3>
+      <span>HSK1–5 全级别 · 每课练习<br>选级别 → 选课号 → 课后自主练习</span>
+    </div>
+    <div class="hall-card mock" onclick="showMockCatalog()">
+      <div class="hc-icon">🎯</div>
+      <h3>模拟考试 Mock Exam</h3>
+      <span>HSK1–5 真题卷<br>选级别 → 选卷号 → 计时 · 答题卡 · 交卷判分</span>
+    </div>
+  </div>
+
   <button onclick="openQueryModal()" style="background:#8e44ad; color:white; border:none; padding:12px 24px; border-radius:30px; font-size:15px; font-weight:bold; cursor:pointer; box-shadow: 0 4px 12px rgba(142,68,173,0.2);">
     🔍 查询以往成绩与老师批改反馈
   </button>
+</div>
 
-  <div class="test-grid" id="testGrid">
-      <!-- 试卷列表将由 JS 动态生成在此处 -->
-  </div>
+<!-- 练习册目录：级别 → 课号 -->
+<div class="center-view" id="wbCatalogView" style="display:none">
+  <h1>📚 练习册 Workbook</h1>
+  <p>先选级别，再选课号（灰色 = 数据文件还没上传，传上后自动亮起）</p>
+  <div class="lv-pills" id="wbLevelPills"></div>
+  <div class="test-grid" id="wbGrid"></div>
+  <button onclick="backToHall()" style="background:none;border:none;color:var(--text2);cursor:pointer;text-decoration:underline;margin-top:5px;">← 返回大厅</button>
+</div>
+
+<!-- 模拟考试目录：级别 → 真题卷号 -->
+<div class="center-view" id="mockCatalogView" style="display:none">
+  <h1>🎯 模拟考试 Mock Exam</h1>
+  <p>先选级别，再选真题卷（灰色 = 真题数据还没上传）</p>
+  <div class="lv-pills" id="mockLevelPills"></div>
+  <div class="test-grid" id="mockGrid"></div>
+  <button onclick="backToHall()" style="background:none;border:none;color:var(--text2);cursor:pointer;text-decoration:underline;margin-top:5px;">← 返回大厅</button>
 </div>
 
 <!-- 第二页：模式选择 -->
@@ -133,12 +185,31 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
   </div>
 </div>
 
-<!-- 模式1：课后自主练习 -->
+<!-- 答题卡弹窗（模拟考试用） -->
+<div id="sheetModal" class="modal-overlay" style="display:none">
+  <div class="modal-content">
+    <h3 style="color:var(--accent);margin-bottom:6px;text-align:center;">☰ 答题卡</h3>
+    <p style="font-size:12px;color:var(--text2);text-align:center;">蓝色 = 已作答 · 点题号直接跳题</p>
+    <div class="sheet-grid" id="sheetGrid"></div>
+    <button onclick="mockSubmit()" class="s-submit-btn" style="width:100%;margin-top:18px;">交卷出分</button>
+    <button onclick="closeSheet()" class="s-submit-btn" style="width:100%;background:none;color:#666;margin-top:6px;border:none;">关闭</button>
+  </div>
+</div>
+
+<!-- 模式1：课后自主练习 / 模拟考试 -->
 <div id="homeworkView" style="display:none">
   <div class="header">
     <button class="back-btn" onclick="location.reload()">← 返回大厅</button>
-    <h1>课后自主练习</h1>
-    <div class="status"><span id="hwProgress">1 / --</span></div>
+    <h1 id="hwTitle">课后自主练习</h1>
+    <div class="status">
+      <span id="hwTimer" class="timer-box" style="display:none">--:--</span>
+      <button id="hwSheetBtn" class="sheet-btn" style="display:none" onclick="openSheet()">☰ 答题卡</button>
+      <span id="hwProgress">1 / --</span>
+    </div>
+    <div id="hwAudioBar" style="display:none;width:100%;max-width:620px;margin:8px auto 0;">
+      <audio id="hwAudio" controls preload="metadata" style="width:100%;height:40px"></audio>
+      <div style="font-size:11px;color:var(--text2);text-align:center;margin-top:2px">🎧 听力录音 · 点播放后可边听边答题，翻题不中断</div>
+    </div>
   </div>
   <div class="s-wrap">
     <div class="s-name-section" id="hwNameSection">
@@ -214,18 +285,20 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
 // ==========================================
 // ⭐ 第一步：大厅试卷目录配置区 ⭐
 // ==========================================
-const TEST_CATALOG = [
-    { id: "H4_11", title: "第11课", subtitle: "读书好，读好书，好读书" },
-    { id: "H4_12", title: "第12课", subtitle: "用心发现世界" },
-    { id: "H4_13", title: "第13课", subtitle: "喝着茶看京剧" },
-    { id: "H4_14", title: "第14课", subtitle: "保护地球母亲" },
-    { id: "H4_15", title: "第15课", subtitle: "教育孩子的艺术" },
-    { id: "H4_16", title: "第16课", subtitle: "生活可以更美好" },
-    { id: "H4_17", title: "第17课", subtitle: "人与自然" },
-    { id: "H4_18", title: "第18课", subtitle: "科技与世界" },
-    { id: "H4_19", title: "第19课", subtitle: "生活的味道" },
-    { id: "H4_20", title: "第20课", subtitle: "路上的风景" }
+/* 级别配置：lessons = 该级别教材课数；titles 可选（有就显示课名）。
+ * 练习册数据文件：data_H1_1.js … data_H5_36.js；真题文件：mock_H4_1.js …
+ * 文件传到仓库里，目录自动亮起，无需改代码。 */
+const LEVELS = [
+    { key: "H1", name: "HSK 1", lessons: 15 },
+    { key: "H2", name: "HSK 2", lessons: 20 },
+    { key: "H3", name: "HSK 3", lessons: 20 },
+    { key: "H4", name: "HSK 4", lessons: 20,
+      titles: { 11:"读书好，读好书，好读书", 12:"用心发现世界", 13:"喝着茶看京剧",
+                14:"保护地球母亲", 15:"教育孩子的艺术", 16:"生活可以更美好",
+                17:"人与自然", 18:"科技与世界", 19:"生活的味道", 20:"路上的风景" } },
+    { key: "H5", name: "HSK 5", lessons: 36 }
 ];
+const MOCK_SLOTS = 8;   // 每级别最多探测 8 套真题（mock_H<级别>_<卷号>.js）
 
 // ==========================================
 // ⭐ 第二步：底层配置 ⭐
@@ -247,19 +320,117 @@ let Q_MAP = {};
 // 页面加载与大厅渲染逻辑
 // ==========================================
 window.onload = function() {
-    renderTestCatalog();
+    showOnly('testCatalogView');
 };
 
-function renderTestCatalog() {
-    const grid = document.getElementById('testGrid');
-    let html = '';
-    TEST_CATALOG.forEach(test => {
-        html += `<div class="test-card" onclick="loadTestData('${test.id}')">
-            <h3>${test.title}</h3>
-            <span>${test.subtitle}</span>
-        </div>`;
+const CENTER_VIEWS = ['testCatalogView','wbCatalogView','mockCatalogView','modeSelectView'];
+function showOnly(id) {
+    CENTER_VIEWS.forEach(v => {
+        const el = document.getElementById(v);
+        if (el) el.style.display = (v === id) ? 'flex' : 'none';
     });
+    document.getElementById('homeworkView').style.display = (id === 'homeworkView') ? '' : 'none';
+    document.getElementById('teacherView').style.display = 'none';
+    document.getElementById('studentView').style.display = 'none';
+    window.scrollTo(0, 0);
+}
+function backToHall() { showOnly('testCatalogView'); }
+
+/* ---------- 大厅两个入口 ---------- */
+let wbLevel = 'H4'; let mockLevel = 'H4';
+
+function showWbCatalog() { showOnly('wbCatalogView'); renderWbLevels(); }
+function showMockCatalog() { showOnly('mockCatalogView'); renderMockLevels(); }
+
+function renderWbLevels() {
+    document.getElementById('wbLevelPills').innerHTML = LEVELS.map(l =>
+        `<button class="lv-pill${l.key === wbLevel ? ' on' : ''}" onclick="wbLevel='${l.key}';renderWbLevels()">${l.name}<small>${l.lessons}课</small></button>`
+    ).join('');
+    renderWbGrid();
+}
+
+async function probeFile(url) {
+    try { const r = await fetch(url, { method: 'HEAD' }); return !!r.ok; }
+    catch (e) { return false; }
+}
+
+async function renderWbGrid() {
+    const lv = LEVELS.find(l => l.key === wbLevel);
+    const grid = document.getElementById('wbGrid');
+    grid.innerHTML = '<p style="color:var(--text2)">正在检查哪些课已上架…</p>';
+    const ok = [];
+    for (let n = 1; n <= lv.lessons; n++) ok.push(await probeFile('data_' + lv.key + '_' + n + '.js'));
+    let html = '';
+    for (let n = 1; n <= lv.lessons; n++) {
+        const t = (lv.titles && lv.titles[n]) ? lv.titles[n] : '';
+        html += '<div class="test-card' + (ok[n-1] ? ' ok' : ' na') + '" onclick="loadTestData(\'' + lv.key + '_' + n + '\')">' +
+            '<h3>' + lv.name + ' · 第' + n + '课</h3>' +
+            '<span>' + (t || '练习题') + '</span>' +
+            '<em class="avail"><i class="dot"></i>' + (ok[n-1] ? '已上架' : '未上架') + '</em></div>';
+    }
     grid.innerHTML = html;
+}
+
+function renderMockLevels() {
+    document.getElementById('mockLevelPills').innerHTML = LEVELS.map(l =>
+        `<button class="lv-pill${l.key === mockLevel ? ' on' : ''}" onclick="mockLevel='${l.key}';renderMockLevels()">${l.name}<small>${l.lessons}课</small></button>`
+    ).join('');
+    renderMockGrid();
+}
+
+async function renderMockGrid() {
+    const lv = LEVELS.find(l => l.key === mockLevel);
+    const grid = document.getElementById('mockGrid');
+    grid.innerHTML = '<p style="color:var(--text2)">正在检查真题卷…</p>';
+    const avail = [];
+    for (let n = 1; n <= MOCK_SLOTS; n++) {
+        if (await probeFile('mock_' + lv.key + '_' + n + '.js')) avail.push(n);
+    }
+    if (!avail.length) {
+        grid.innerHTML = '<p style="color:var(--text2)">「' + lv.name + '」的真题卷还没上传。<br>把 <b>mock_' + lv.key + '_1.js</b> 传到仓库后，这里会自动出现第一套卷。</p>';
+        return;
+    }
+    grid.innerHTML = avail.map(n =>
+        '<div class="test-card ok" onclick="loadMockData(\'' + lv.key + '_' + n + '\')">' +
+        '<h3>' + lv.name + ' · 真题卷 ' + n + '</h3>' +
+        '<span>整套试卷 · 计时 · 答题卡 · 交卷判分</span>' +
+        '<em class="avail"><i class="dot"></i>已上架</em></div>'
+    ).join('');
+}
+
+/* ---------- 真题卷加载 ---------- */
+function loadMockData(paperId) {
+    currentTestId = paperId;
+    TOPIC_Q = 'room/' + MY_ROOM_ID + '/hsk/' + currentTestId + '/question';
+    TOPIC_ANS = 'room/' + MY_ROOM_ID + '/hsk/' + currentTestId + '/answer';
+    TOPIC_REV = 'room/' + MY_ROOM_ID + '/hsk/' + currentTestId + '/reveal';
+    showOnly('modeSelectView');
+    document.getElementById('selectedTestTitle').innerText = '正在加载真题卷...';
+    document.getElementById('selectedTestSubtitle').innerText = paperId;
+    const script = document.createElement('script');
+    script.src = 'mock_' + paperId + '.js';
+    script.onload = () => {
+        const d = window.HSK_MOCK_DATA;
+        if (!d || !d.questions || !d.questions.length) {
+            document.getElementById('selectedTestTitle').innerText = '加载失败 ❌';
+            document.getElementById('selectedTestSubtitle').innerHTML = 'mock_' + paperId + '.js 里没有 window.HSK_MOCK_DATA 或 questions 为空。';
+            return;
+        }
+        MOCK_META = d;
+        ALL_QUESTIONS = d.questions;
+        Q_MAP = {}; ALL_QUESTIONS.forEach(q => Q_MAP[q.id] = q);
+        document.getElementById('selectedTestTitle').innerText = d.title || (d.level + ' 模拟考试');
+        document.getElementById('selectedTestSubtitle').innerText =
+            (d.durationMin ? '限时 ' + d.durationMin + ' 分钟 · ' : '') + '共 ' + d.questions.length + ' 题';
+        const b0 = document.querySelector('#btnGroup .mode-btn');
+        if (b0) b0.innerHTML = '🎯 开始模拟考试<span>限时作答 · 可用答题卡跳题 · 交卷自动判分</span>';
+        document.getElementById('btnGroup').style.display = 'flex';
+    };
+    script.onerror = () => {
+        document.getElementById('selectedTestTitle').innerText = '加载失败 ❌';
+        document.getElementById('selectedTestSubtitle').innerHTML = '未找到文件 <b>mock_' + paperId + '.js</b>，请确认已上传到仓库。';
+    };
+    document.body.appendChild(script);
 }
 
 function loadTestData(testId) {
@@ -267,9 +438,11 @@ function loadTestData(testId) {
     TOPIC_Q = `room/${MY_ROOM_ID}/hsk/${currentTestId}/question`;
     TOPIC_ANS = `room/${MY_ROOM_ID}/hsk/${currentTestId}/answer`;
     TOPIC_REV = `room/${MY_ROOM_ID}/hsk/${currentTestId}/reveal`;
+    MOCK_META = null;
 
-    document.getElementById('testCatalogView').style.display = 'none';
-    document.getElementById('modeSelectView').style.display = 'flex';
+    showOnly('modeSelectView');
+    const b0 = document.querySelector('#btnGroup .mode-btn');
+    if (b0) b0.innerHTML = '🏠 课后自主练习<span>学生自己做，做完自动发到老师的Google表格</span>';
     document.getElementById('selectedTestTitle').innerText = "加载中...";
 
     const script = document.createElement('script');
@@ -312,9 +485,11 @@ function playAudioOrTTS(qId) {
     }
 }
 
-// ================== 课后自主练习 ==================
+// ================== 课后自主练习 / 模拟考试 ==================
 let hwIndex = 0; let hwAnswers = {};
 let currentMistakes = [];
+let hwIsMock = false; let MOCK_META = null;
+let hwTimerId = null; let hwDeadline = 0; let hwSubmitted = false;
 
 function saveProgress() {
     if (!currentTestId) return;
@@ -323,31 +498,88 @@ function saveProgress() {
 }
 
 function enterHomework() {
-    document.getElementById('modeSelectView').style.display = 'none';
-    document.getElementById('homeworkView').style.display = '';
-    
-    const savedData = localStorage.getItem('hsk_progress_' + currentTestId);
-    if (savedData) {
-        try {
-            const parsed = JSON.parse(savedData);
-            if (confirm("系统发现你有上次未完成的答题记录，是否继续上次的进度？\n(点取消将重新开始)")) {
-                hwIndex = parsed.index || 0;
-                hwAnswers = parsed.answers || {};
-            } else {
-                localStorage.removeItem('hsk_progress_' + currentTestId); 
-            }
-        } catch(e) {}
+    hwIsMock = !!MOCK_META;
+    hwSubmitted = false;
+    hwIndex = 0; hwAnswers = {}; currentMistakes = [];
+    showOnly('homeworkView');
+    document.getElementById('hwTitle').innerText = hwIsMock ? '模拟考试' : '课后自主练习';
+    document.getElementById('hwTimer').style.display = hwIsMock ? '' : 'none';
+    document.getElementById('hwSheetBtn').style.display = hwIsMock ? '' : 'none';
+    document.getElementById('hwNavGroup').style.display = 'flex';
+    document.getElementById('hwNameInput').value = localStorage.getItem('hsk_hw_name') || '';
+
+    /* 听力播放条：真题卷带 audio 时显示，翻题不中断 */
+    const audioBar = document.getElementById('hwAudioBar');
+    const audioEl = document.getElementById('hwAudio');
+    if (hwIsMock && MOCK_META && MOCK_META.audio) {
+        if (audioEl.getAttribute('src') !== MOCK_META.audio) audioEl.src = MOCK_META.audio;
+        audioBar.style.display = 'block';
+    } else {
+        audioBar.style.display = 'none';
+        audioEl.pause();
     }
-    
+
+    if (hwIsMock) {
+        startMockTimer();
+    } else {
+        stopMockTimer();
+        const savedData = localStorage.getItem('hsk_progress_' + currentTestId);
+        if (savedData) {
+            try {
+                const parsed = JSON.parse(savedData);
+                if (confirm("系统发现你有上次未完成的答题记录，是否继续上次的进度？\n(点取消将重新开始)")) {
+                    hwIndex = parsed.index || 0;
+                    hwAnswers = parsed.answers || {};
+                } else {
+                    localStorage.removeItem('hsk_progress_' + currentTestId);
+                }
+            } catch(e) {}
+        }
+    }
     hwRenderQ();
 }
+
+/* ---------- 模拟考试计时 ---------- */
+function startMockTimer() {
+    stopMockTimer();
+    const mins = (MOCK_META && MOCK_META.durationMin) || 100;
+    hwDeadline = Date.now() + mins * 60000;
+    hwTimerId = setInterval(updateMockTimer, 1000);
+    updateMockTimer();
+}
+function stopMockTimer() { if (hwTimerId) { clearInterval(hwTimerId); hwTimerId = null; } }
+function updateMockTimer() {
+    const el = document.getElementById('hwTimer');
+    const left = Math.max(0, hwDeadline - Date.now());
+    const m = Math.floor(left / 60000), s = Math.floor(left % 60000 / 1000);
+    el.innerText = '⏱ ' + String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+    el.classList.toggle('warn', left < 5 * 60000 && left > 0);
+    if (left <= 0 && !hwSubmitted) {
+        stopMockTimer();
+        alert('考试时间到，系统自动交卷。');
+        mockSubmit();
+    }
+}
+
+/* ---------- 答题卡 ---------- */
+function openSheet() {
+    const grid = document.getElementById('sheetGrid');
+    grid.innerHTML = ALL_QUESTIONS.map((q, i) => {
+        const done = hwAnswers[q.id] !== undefined && hwAnswers[q.id] !== '';
+        return '<button class="sheet-q' + (done ? ' done' : '') + '" onclick="jumpTo(' + i + ')">' + q.id + '</button>';
+    }).join('');
+    document.getElementById('sheetModal').style.display = 'flex';
+}
+function closeSheet() { document.getElementById('sheetModal').style.display = 'none'; }
+function jumpTo(i) { hwIndex = i; closeSheet(); hwRenderQ(); }
+function mockSubmit() { hwSubmit(); }
 
 function hwRenderQ() {
     window.speechSynthesis.cancel(); 
     const q = ALL_QUESTIONS[hwIndex];
     document.getElementById('hwProgress').innerText = `${hwIndex + 1} / ${ALL_QUESTIONS.length}`;
     document.getElementById('hwPrevBtn').disabled = (hwIndex === 0);
-    document.getElementById('hwNextBtn').innerText = (hwIndex === ALL_QUESTIONS.length - 1) ? "交卷出分" : "下一题";
+    document.getElementById('hwNextBtn').innerText = (hwIndex === ALL_QUESTIONS.length - 1) ? (hwIsMock ? "交卷" : "交卷出分") : "下一题";
 
     let audioHtml = '';
     if (q.section === '听力') {
@@ -361,7 +593,7 @@ function hwRenderQ() {
 
     let inputHtml = ''; const savedAns = hwAnswers[q.id];
 
-    if (q.type === 'choice') {
+    if ((q.type === 'choice' || q.type === 'single_choice')) {
         inputHtml = '<div class="s-options">';
         q.options.forEach((opt, i) => {
             const key = q.optionKeys ? q.optionKeys[i] : String.fromCharCode(65 + i);
@@ -377,7 +609,7 @@ function hwRenderQ() {
 
     document.getElementById('hwQuestionArea').innerHTML = `
         <div class="s-question">
-            <div class="q-num">第 ${q.id} 题 · ${q.section} ${q.part || ''}</div>
+            <div class="q-num">第 ${q.id} 题${q.section ? ' · ' + q.section : ''}${q.part ? ' · ' + q.part : ''}</div>
             <div class="q-instruction">${escHtml(q.instruction)}</div>
             ${audioHtml}
             ${bodyHtml}
@@ -399,55 +631,69 @@ function hwChangeQ(step) {
 }
 
 function hwSubmit() {
+    if (hwSubmitted) return;
+    hwSubmitted = true;
     window.speechSynthesis.cancel();
+    if (hwIsMock) stopMockTimer();
+    const hwAudioEl = document.getElementById('hwAudio');
+    if (hwAudioEl) hwAudioEl.pause();
     let name = document.getElementById('hwNameInput').value.trim() || "匿名学生";
-    document.getElementById('hwQuestionArea').innerHTML = `<div style="text-align:center;padding:40px"><div class="pulse" style="font-size:40px">⏳</div><p style="margin-top:15px;color:var(--accent)">正在自动批改并上传给老师...</p></div>`;
+    localStorage.setItem('hsk_hw_name', name);
+    const modeLabel = hwIsMock ? '模拟考试' : '课后作业';
+    document.getElementById('hwQuestionArea').innerHTML = '<div style="text-align:center;padding:40px"><div class="pulse" style="font-size:40px">⏳</div><p style="margin-top:15px;color:var(--accent)">正在自动批改并上传给老师...</p></div>';
     document.getElementById('hwNavGroup').style.display = 'none';
+    closeSheet();
 
-    let correctCount = 0, totalObj = 0, details = [], mistakes = {};
+    let correctCount = 0, totalObj = 0, mistakes = {};
+    const secStats = {};
     currentMistakes = [];
 
     ALL_QUESTIONS.forEach(q => {
         const uAns = hwAnswers[q.id]; const displayAns = uAns === undefined ? "未作答" : uAns;
         let isCorrect = "需人工批改";
         if(q.gradeMode !== 'manual') {
-            totalObj++; isCorrect = "错误"; let wrong = true;
+            totalObj++;
+            const sk = (q.section || '客观题') + (q.part ? ' ' + q.part : '');
+            secStats[sk] = secStats[sk] || { c: 0, t: 0 };
+            secStats[sk].t++;
+            isCorrect = "错误"; let wrong = true;
             if(q.type === 'text_input' && q.gradeMode === 'auto_char') {
                 let cleanUAns = String(uAns || "").toUpperCase().replace(/\s/g, '');
                 let cleanCAns = String(q.answer || "").toUpperCase().replace(/\s/g, '');
                 if(cleanUAns === cleanCAns) { correctCount++; isCorrect = "正确"; wrong = false; }
-            } else { 
-                if(uAns === q.answer) { correctCount++; isCorrect = "正确"; wrong = false; } 
+            } else {
+                if(uAns === q.answer) { correctCount++; isCorrect = "正确"; wrong = false; }
             }
-            if(wrong) { 
-                if(!mistakes[q.section]) mistakes[q.section] = 0; mistakes[q.section]++; 
+            if(isCorrect === '正确') secStats[sk].c++;
+            if(wrong) {
+                if(!mistakes[q.section]) mistakes[q.section] = 0; mistakes[q.section]++;
                 currentMistakes.push(q);
             }
         }
-        details.push({ 题号: q.id, 题型: q.section, 你的答案: displayAns, 正确答案: q.answer, 结果: isCorrect });
     });
 
     const score = totalObj > 0 ? Math.round((correctCount/totalObj)*100) : 100;
     const secs = Object.keys(mistakes);
     const weak = secs.length > 0 ? secs.map(s => `${s}(错${mistakes[s]}题)`).join('，') : '无明显薄弱项';
-    const report = { "试卷": currentTestId, "姓名": name, "模式": "课后作业", "得分": score, "客观对题": correctCount, "答题详情": JSON.stringify(details), "薄弱项": weak, "交卷时间": new Date().toLocaleString() };
+    const report = { "试卷": currentTestId, "姓名": name, "模式": modeLabel, "得分": score, "客观对题": correctCount, "答题详情": JSON.stringify(currentMistakes.map(q => ({ 题号: q.id, 你的答案: hwAnswers[q.id] === undefined ? "未作答" : hwAnswers[q.id], 正确答案: q.answer }))), "薄弱项": weak, "交卷时间": new Date().toLocaleString() };
 
     fetch(WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(report) })
     .then(r => r.json()).then(res => {
-        localStorage.removeItem('hsk_progress_' + currentTestId);
-        
-        let reviewBtnHtml = currentMistakes.length > 0 
+        if (!hwIsMock) localStorage.removeItem('hsk_progress_' + currentTestId);
+
+        const secLine = Object.keys(secStats).map(k => k + ' ' + secStats[k].c + '/' + secStats[k].t).join('　·　');
+
+        let reviewBtnHtml = currentMistakes.length > 0
             ? `<button onclick="renderMistakesView()" class="s-submit-btn" style="width:100%; margin-top:15px; background:var(--red);">🔍 本地查看错题 (${currentMistakes.length})</button>`
             : `<p style="color:var(--green); font-weight:bold; margin-top:15px; font-size:16px;">🎉 客观题全对！</p>`;
 
         document.getElementById('hwQuestionArea').innerHTML = `
             <div style="background:var(--green-light);border:1px solid var(--green);border-radius:12px;padding:30px;text-align:center;">
                 <div style="font-size:40px;margin-bottom:10px">✅</div>
-                <h2 style="color:#166534;margin-bottom:15px">测试已成功提交！</h2>
+                <h2 style="color:#166534;margin-bottom:15px">${hwIsMock ? '考试已交卷！' : '测试已成功提交！'}</h2>
                 <p>客观题得分：<b style="font-size:20px">${score}分</b> (${correctCount}/${totalObj})</p>
+                ${secLine ? '<p style="font-size:13px;color:#374151;margin:4px 0 0">' + secLine + '</p>' : ''}
                 ${reviewBtnHtml}
-                
-                <!-- 新增：提交后直接查看老师批改反馈按钮 -->
                 <button onclick="openQueryModal('${name}')" class="s-submit-btn" style="width:100%; margin-top:10px; background:#8e44ad;">📑 查成绩 / 看老师后续批改</button>
                 <button onclick="location.reload()" class="s-submit-btn" style="width:100%; margin-top:10px; background:var(--card); color:var(--text); border:1px solid var(--border);">🏠 返回首页</button>
             </div>`;
@@ -482,7 +728,7 @@ function renderMistakesView() {
 
         html += `
         <div class="s-question" style="border: 2px solid var(--red-light);">
-            <div class="q-num" style="color:var(--red);">第 ${q.id} 题 · ${q.section} ${q.part || ''}</div>
+            <div class="q-num" style="color:var(--red);">第 ${q.id} 题${q.section ? ' · ' + q.section : ''}${q.part ? ' · ' + q.part : ''}</div>
             <div class="q-instruction">${escHtml(q.instruction)}</div>
             ${audioHtml}
             ${bodyHtml}
@@ -556,7 +802,7 @@ function liveSelectQ(id) {
     if (q.statement) bodyHtml = `<div class="q-body">★ ${escHtml(q.statement)}</div>`;
 
     let inputHtml = '';
-    if (q.type === 'choice' && q.options) {
+    if ((q.type === 'choice' || q.type === 'single_choice') && q.options) {
         inputHtml = '<div class="s-options">';
         q.options.forEach((opt, i) => {
             const key = q.optionKeys ? q.optionKeys[i] : String.fromCharCode(65 + i);
@@ -583,7 +829,7 @@ function liveSelectQ(id) {
 
     document.getElementById('tMain').innerHTML = `
         <div class="s-question" style="max-width:100%; border:2px solid var(--accent); margin:0 0 16px 0;">
-            <div class="q-num">👑 当前同步给全班：第 ${q.id} 题 · ${q.section} ${q.part || ''}</div>
+            <div class="q-num">👑 当前同步给全班：第 ${q.id} 题${q.section ? ' · ' + q.section : ''}${q.part ? ' · ' + q.part : ''}</div>
             <div class="q-instruction">${escHtml(q.instruction)}</div>
             ${audioHtml}
             ${bodyHtml}
@@ -617,7 +863,7 @@ function renderLiveStudentQ(id) {
         else if (q.script) { audioHtml = `<div class="audio-box"><button class="tts-btn" onclick="playAudioOrTTS(${q.id})">🔊 自己播放本题录音</button></div>`; }
     }
 
-    if (q.type === 'choice' && q.options) {
+    if ((q.type === 'choice' || q.type === 'single_choice') && q.options) {
         q.options.forEach((opt, i) => {
             const key = q.optionKeys ? q.optionKeys[i] : String.fromCharCode(65+i);
             inputHtml += `<button class="s-opt-btn" id="lopt_${key}" onclick="liveSendAns('${key}')"><span class="letter">${key}</span><span>${escHtml(opt)}</span></button>`;
@@ -765,13 +1011,14 @@ function fetchStudentResult() {
 <script>
 (function () {
   var q = new URLSearchParams(location.search);
-  var tid = q.get('test');
+  var tid = q.get('test');      /* 练习册深链：?test=H4_11&mode=hw */
+  var mid = q.get('mock');      /* 真题深链：  ?mock=H4_1 */
   var mode = q.get('mode') || 'hw';
-  if (!tid) return;
+  if (!tid && !mid) return;
   var timer = setInterval(function () {
     if (typeof loadTestData !== 'function') return;
     clearInterval(timer);
-    loadTestData(tid);
+    if (mid) loadMockData(mid); else loadTestData(tid);
     var wait = setInterval(function () {
       var g = document.getElementById('btnGroup');
       if (g && g.style.display === 'flex') {
