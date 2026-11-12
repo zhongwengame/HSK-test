@@ -145,7 +145,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
 <!-- 练习册目录：级别 → 课号 -->
 <div class="center-view" id="wbCatalogView" style="display:none">
   <h1>📚 练习册 Workbook</h1>
-  <p>先选级别，再选课号（灰色 = 数据文件还没上传，传上后自动亮起）</p>
+  <p>先选级别，再选课号（灰色 = 还没上传；数据放同名文件夹，如 HSK4/data_H4_11.js）</p>
   <div class="lv-pills" id="wbLevelPills"></div>
   <div class="test-grid" id="wbGrid"></div>
   <button onclick="backToHall()" style="background:none;border:none;color:var(--text2);cursor:pointer;text-decoration:underline;margin-top:5px;">← 返回大厅</button>
@@ -154,7 +154,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
 <!-- 模拟考试目录：级别 → 真题卷号 -->
 <div class="center-view" id="mockCatalogView" style="display:none">
   <h1>🎯 模拟考试 Mock Exam</h1>
-  <p>先选级别，再选真题卷（灰色 = 真题数据还没上传）</p>
+  <p>先选级别，再选真题卷（灰色 = 还没上传；卷子/录音/题图放同名文件夹，如 HSK4/）</p>
   <div class="lv-pills" id="mockLevelPills"></div>
   <div class="test-grid" id="mockGrid"></div>
   <button onclick="backToHall()" style="background:none;border:none;color:var(--text2);cursor:pointer;text-decoration:underline;margin-top:5px;">← 返回大厅</button>
@@ -208,7 +208,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
     </div>
     <div id="hwAudioBar" style="display:none;width:100%;max-width:620px;margin:8px auto 0;">
       <audio id="hwAudio" controls preload="metadata" style="width:100%;height:40px"></audio>
-      <div style="font-size:11px;color:var(--text2);text-align:center;margin-top:2px">🎧 听力录音 · 点播放后可边听边答题，翻题不中断</div>
+      <div id="hwAudioTip" style="font-size:11px;color:var(--text2);text-align:center;margin-top:2px">🎧 听力录音 · 点播放后可边听边答题，翻题不中断</div>
     </div>
   </div>
   <div class="s-wrap">
@@ -351,15 +351,26 @@ function renderWbLevels() {
 
 async function probeFile(url) {
     try { const r = await fetch(url, { method: 'HEAD' }); return !!r.ok; }
-    catch (e) { return false; }
+    catch (e) { FETCH_BROKEN = true; return false; }
+}
+
+/* 定位文件：优先级别子目录 HSK4/xxx，回落根目录 xxx（兼容旧结构），结果缓存 */
+async function locateFile(name, lvKey) {
+    if (PATH_CACHE[name] !== undefined) return PATH_CACHE[name];
+    const dir = 'HSK' + lvKey.replace(/^H/, '');
+    if (await probeFile(dir + '/' + name)) PATH_CACHE[name] = dir + '/' + name;
+    else if (await probeFile(name)) PATH_CACHE[name] = name;
+    else PATH_CACHE[name] = FETCH_BROKEN ? (dir + '/' + name) : null;  /* 本地 file:// 无法探测 → 默认级别目录 */
+    return PATH_CACHE[name];
 }
 
 async function renderWbGrid() {
     const lv = LEVELS.find(l => l.key === wbLevel);
     const grid = document.getElementById('wbGrid');
     grid.innerHTML = '<p style="color:var(--text2)">正在检查哪些课已上架…</p>';
-    const ok = [];
-    for (let n = 1; n <= lv.lessons; n++) ok.push(await probeFile('data_' + lv.key + '_' + n + '.js'));
+    const names = [];
+    for (let n = 1; n <= lv.lessons; n++) names.push('data_' + lv.key + '_' + n + '.js');
+    const ok = await Promise.all(names.map(n => locateFile(n, lv.key)));
     let html = '';
     for (let n = 1; n <= lv.lessons; n++) {
         const t = (lv.titles && lv.titles[n]) ? lv.titles[n] : '';
@@ -382,10 +393,11 @@ async function renderMockGrid() {
     const lv = LEVELS.find(l => l.key === mockLevel);
     const grid = document.getElementById('mockGrid');
     grid.innerHTML = '<p style="color:var(--text2)">正在检查真题卷…</p>';
+    const names = [];
+    for (let n = 1; n <= MOCK_SLOTS; n++) names.push('mock_' + lv.key + '_' + n + '.js');
+    const ok = await Promise.all(names.map(n => locateFile(n, lv.key)));
     const avail = [];
-    for (let n = 1; n <= MOCK_SLOTS; n++) {
-        if (await probeFile('mock_' + lv.key + '_' + n + '.js')) avail.push(n);
-    }
+    for (let n = 1; n <= MOCK_SLOTS; n++) { if (ok[n-1]) avail.push(n); }
     if (!avail.length) {
         grid.innerHTML = '<p style="color:var(--text2)">「' + lv.name + '」的真题卷还没上传。<br>把 <b>mock_' + lv.key + '_1.js</b> 传到仓库后，这里会自动出现第一套卷。</p>';
         return;
@@ -399,7 +411,7 @@ async function renderMockGrid() {
 }
 
 /* ---------- 真题卷加载 ---------- */
-function loadMockData(paperId) {
+async function loadMockData(paperId) {
     currentTestId = paperId;
     TOPIC_Q = 'room/' + MY_ROOM_ID + '/hsk/' + currentTestId + '/question';
     TOPIC_ANS = 'room/' + MY_ROOM_ID + '/hsk/' + currentTestId + '/answer';
@@ -407,8 +419,11 @@ function loadMockData(paperId) {
     showOnly('modeSelectView');
     document.getElementById('selectedTestTitle').innerText = '正在加载真题卷...';
     document.getElementById('selectedTestSubtitle').innerText = paperId;
+    let mockSrc = PATH_CACHE['mock_' + paperId + '.js'];
+    if (mockSrc === undefined) mockSrc = await locateFile('mock_' + paperId + '.js', paperId.split('_')[0]);
+    MOCK_DIR = mockSrc ? mockSrc.slice(0, mockSrc.lastIndexOf('/') + 1) : '';
     const script = document.createElement('script');
-    script.src = 'mock_' + paperId + '.js';
+    script.src = mockSrc || ('mock_' + paperId + '.js');
     script.onload = () => {
         const d = window.HSK_MOCK_DATA;
         if (!d || !d.questions || !d.questions.length) {
@@ -428,12 +443,12 @@ function loadMockData(paperId) {
     };
     script.onerror = () => {
         document.getElementById('selectedTestTitle').innerText = '加载失败 ❌';
-        document.getElementById('selectedTestSubtitle').innerHTML = '未找到文件 <b>mock_' + paperId + '.js</b>，请确认已上传到仓库。';
+        document.getElementById('selectedTestSubtitle').innerHTML = '未找到文件 <b>' + (mockSrc || ('mock_' + paperId + '.js')) + '</b>，请确认已上传到仓库（级别文件夹或根目录均可）。';
     };
     document.body.appendChild(script);
 }
 
-function loadTestData(testId) {
+async function loadTestData(testId) {
     currentTestId = testId;
     TOPIC_Q = `room/${MY_ROOM_ID}/hsk/${currentTestId}/question`;
     TOPIC_ANS = `room/${MY_ROOM_ID}/hsk/${currentTestId}/answer`;
@@ -445,8 +460,10 @@ function loadTestData(testId) {
     if (b0) b0.innerHTML = '🏠 课后自主练习<span>学生自己做，做完自动发到老师的Google表格</span>';
     document.getElementById('selectedTestTitle').innerText = "加载中...";
 
+    let dataSrc = PATH_CACHE['data_' + testId + '.js'];
+    if (dataSrc === undefined) dataSrc = await locateFile('data_' + testId + '.js', testId.split('_')[0]);
     const script = document.createElement('script');
-    script.src = `data_${testId}.js`;
+    script.src = dataSrc || ('data_' + testId + '.js');
     
     script.onload = () => {
         if (typeof window.HSK_TEST_DATA !== 'undefined') {
@@ -490,6 +507,9 @@ let hwIndex = 0; let hwAnswers = {};
 let currentMistakes = [];
 let hwIsMock = false; let MOCK_META = null;
 let hwTimerId = null; let hwDeadline = 0; let hwSubmitted = false;
+let MOCK_DIR = '';          /* 当前真题卷资源目录前缀（如 'HSK4/'），音频/题图自动拼接 */
+const PATH_CACHE = {};      /* 文件名 → 实际路径（级别目录优先，根目录兜底） */
+let FETCH_BROKEN = false;   /* 本地 file:// 无 fetch → 默认走级别目录 */
 
 function saveProgress() {
     if (!currentTestId) return;
@@ -512,8 +532,15 @@ function enterHomework() {
     const audioBar = document.getElementById('hwAudioBar');
     const audioEl = document.getElementById('hwAudio');
     if (hwIsMock && MOCK_META && MOCK_META.audio) {
-        if (audioEl.getAttribute('src') !== MOCK_META.audio) audioEl.src = MOCK_META.audio;
+        const wantAudio = MOCK_DIR + MOCK_META.audio;
+        if (audioEl.getAttribute('src') !== wantAudio) audioEl.src = wantAudio;
         audioBar.style.display = 'block';
+        audioEl.onerror = function () {
+            document.getElementById('hwAudioTip').innerHTML = '⚠️ 听力录音 <b>' + MOCK_META.audio + '</b> 加载失败：请确认已上传到仓库根目录，且文件名完全一致';
+        };
+        audioEl.onloadedmetadata = function () {
+            document.getElementById('hwAudioTip').innerText = '🎧 听力录音已就绪 · 点播放后可边听边答题，翻题不中断';
+        };
     } else {
         audioBar.style.display = 'none';
         audioEl.pause();
@@ -588,8 +615,9 @@ function hwRenderQ() {
     }
 
     let bodyHtml = '';
-    if (q.body) bodyHtml = `<div class="q-body">${escHtml(q.body)}</div>`;
-    if (q.statement) bodyHtml = `<div class="q-body">★ ${escHtml(q.statement)}</div>`;
+    if (q.image) bodyHtml += `<div style="margin:10px 0;text-align:center"><img src="${MOCK_DIR + q.image}" alt="题图" style="max-width:100%;max-height:240px;border:1px solid var(--border);border-radius:8px"></div>`;
+    if (q.body) bodyHtml += `<div class="q-body">${escHtml(q.body)}</div>`;
+    if (q.statement) bodyHtml += `<div class="q-body">★ ${escHtml(q.statement)}</div>`;
 
     let inputHtml = ''; const savedAns = hwAnswers[q.id];
 
