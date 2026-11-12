@@ -760,5 +760,28 @@ function fetchStudentResult() {
     });
 }
 </script>
+
+<!-- ===== AIClass Pro 深链补丁：?test=H4_11&mode=hw 直达该课练习册 ===== -->
+<script>
+(function () {
+  var q = new URLSearchParams(location.search);
+  var tid = q.get('test');
+  var mode = q.get('mode') || 'hw';
+  if (!tid) return;
+  var timer = setInterval(function () {
+    if (typeof loadTestData !== 'function') return;
+    clearInterval(timer);
+    loadTestData(tid);
+    var wait = setInterval(function () {
+      var g = document.getElementById('btnGroup');
+      if (g && g.style.display === 'flex') {
+        clearInterval(wait);
+        if (mode === 'hw' && typeof enterHomework === 'function') enterHomework();
+      }
+    }, 200);
+    setTimeout(function () { clearInterval(wait); }, 8000);
+  }, 200);
+})();
+</script>
 </body>
 </html>
